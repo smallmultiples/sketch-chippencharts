@@ -163,12 +163,12 @@ __webpack_require__.r(__webpack_exports__);
 
 
     if (response.trendTypeInput == 1 || response.trendTypeInput == 2) {
-      var stepIncrease = Math.floor((minMax[1] - minMax[0]) / selectedLayers.layers.length);
+      var stepIncrease = (minMax[1] - minMax[0]) / selectedLayers.layers.length;
 
       if (response.trendTypeInput == 1) {
         newLength = stepIncrease * i + minMax[0];
       } else if (response.trendTypeInput == 2) {
-        var increase_random = Math.floor(stepIncrease * Math.random());
+        var increase_random = stepIncrease * Math.random();
         var plusOrMinus = Math.random() < 0.5 ? -1 : 1;
         newLength = stepIncrease * i + minMax[0] + increase_random * plusOrMinus;
       } // force first and last to be min and max
@@ -179,6 +179,8 @@ __webpack_require__.r(__webpack_exports__);
       } else if (i == selectedLayers.layers.length - 1) {
         newLength = minMax[1];
       }
+
+      newLength = Math.round(newLength * 10) / 10;
     } // Change Width / Height
 
 

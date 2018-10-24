@@ -1,7 +1,7 @@
 # sketch-chippencharts
 Sketch plugin for creating charts with random data for use in mockups. Change the size of selected rectangles. Chose between random and linear. Works for both horizontal and vertical bar charts. Made with love in Chippendale by Martin von Lupin at [Small Multiples]("https://smallmultiples.com.au/").
 
-## How to use this Plugin?
+## How to use this plugin?
 
 ### Create and select rectangles
 <img width="855" height="566" src="https://raw.githubusercontent.com/smallmultiples/sketch-chippencharts/master/images/1_selectLayers.png" title="Select layers">
