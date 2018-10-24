@@ -7,6 +7,7 @@
   "icon": "smubar.png",
   "author": "Martin von Lupin",
   "authorEmail": "martin@small.mu\n",
+  "homepage": "https://github.com/smallmultiples/sketch-chippencharts",
   "commands": [
     {
       "name": "Bar chart from selected rectangles",
