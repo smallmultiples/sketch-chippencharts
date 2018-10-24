@@ -1,0 +1,26 @@
+{
+  "name": "Chippen charts",
+  "description": "Bar chart creator for your mockups using random data. Change the size of selected rectangles. Works for both horizontal and vertical bar charts. Made with love in Chippendale.",
+  "compatibleVersion": 3,
+  "bundleVersion": 1,
+  "version": "0.1",
+  "icon": "smubar.png",
+  "author": "Martin von Lupin",
+  "authorEmail": "martin@small.mu\n",
+  "commands": [
+    {
+      "name": "Bar chart from selected rectangles",
+      "identifier": "barchart",
+      "script": "barchart.js"
+    }
+  ],
+  "menu": {
+    "title": "Chippen charts",
+    "items": [
+      "barchart"
+    ]
+  },
+  "identifier": "Chippen charts",
+  "disableCocoaScriptPreprocessor": true,
+  "appcast": "https://raw.githubusercontent.com//master/.appcast.xml"
+}
