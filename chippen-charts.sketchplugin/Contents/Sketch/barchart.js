@@ -112,16 +112,6 @@ __webpack_require__.r(__webpack_exports__);
   var minMax_fromSelection = getMinMax(doc.selectedLayers, isVertical);
   var response = myinput(minMax_fromSelection, doc.selectedLayers.layers.length);
   var minMax = [response.min, response.max];
-  /*
-  var options = ['Random', 'Trend going up (linear)', 'Trend going up (natural)']
-  var selection = sketch.UI.getSelectionFromUser(
-    "What's it gonna be?",
-    options
-  )
-  	var ok = selection[2]
-  var value = options[selection[1]]
-  */
-
   var myRandomSlots = twoRandomSlots(selectedLayers.layers.length, 'Random');
 
   if (response.code !== 1000) {
@@ -193,8 +183,7 @@ __webpack_require__.r(__webpack_exports__);
       // Change Width
       selectedLayers.layers[i].frame.width = newLength;
     }
-  } //sketch.UI.message(selectedLayers.layers.length + " bars adjusted.")
-
+  }
 });
 
 function getMinMax(arr, isVertical) {
@@ -325,8 +314,7 @@ function myinput() {
 
     alert.addButtonWithTitle("Run");
     alert.addButtonWithTitle("Cancel");
-    alert.addTextLabelWithValue("Define extrema of bars "); //alert.addTextLabelWithValue("or use extrema of current selection.");
-
+    alert.addTextLabelWithValue("Define extrema of bars ");
     alert.alert().window().setInitialFirstResponder(minInput);
     alert.addAccessoryView(view);
     alert.addTextLabelWithValue("Specify the desired trend");
