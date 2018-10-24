@@ -8,14 +8,14 @@ Sketch plugin for creating charts with random data for use in mockups. Change th
 
 ### Define chart setting
 You can define the height / width of the smallest and largest bar. The plugin will automatically trey to use the extrema of your current selection.
-<img width="423" height="424" src="https://raw.githubusercontent.com/smallmultiples/sketch-chippencharts/master/images/2_random2.png" title="Random">
+<img width="880" height="495" src="https://raw.githubusercontent.com/smallmultiples/sketch-chippencharts/master/images/2_random2.png" title="Random">
 
 ### This is how a random chart looks like
 <img width="855" height="566" src="https://raw.githubusercontent.com/smallmultiples/sketch-chippencharts/master/images/3_randomResult.png" title="Result random">
 
 ### Defining a chart with trend going up
 Besindes random numbers you can choose between linear trends and natural trends. Natural trends are like linear ones, but they have a little bit of randomeness aplpied to them.
-<img width="423" height="424" src="https://raw.githubusercontent.com/smallmultiples/sketch-chippencharts/master/images/4_trendUp2.png" title="Trend up">
+<img width="880" height="495" src="https://raw.githubusercontent.com/smallmultiples/sketch-chippencharts/master/images/4_trendUp2.png" title="Trend up">
 
 ### This is how a trend up (natural) chart looks like
 <img width="855" height="566" src="https://raw.githubusercontent.com/smallmultiples/sketch-chippencharts/master/images/5_trendUpResult.png" title="Result trend up">
