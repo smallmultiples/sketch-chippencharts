@@ -1,5 +1,5 @@
 # sketch-chippencharts
-Sketch plugin for creating charts with random data for use in mockups. Change the size of selected rectangles. Chose between random and linear. Works for both horizontal and vertical bar charts. Made with love in Chippendale by Martin von Lupin at [Small Multiples]("https://smallmultiples.com.au/").
+Sketch plugin for creating charts with random data for use in mockups. Change the size of selected rectangles. Chose between random and linear. Works for both horizontal and vertical bar charts. Made with love in by [Small Multiples](https://smallmultiples.com.au/) in Chippendale.
 
 ## How to use this plugin?
 
@@ -23,12 +23,8 @@ Besindes random numbers you can choose between linear trends and natural trends.
 ### Showcase of different types
 <img width="855" height="566" src="https://raw.githubusercontent.com/smallmultiples/sketch-chippencharts/master/images/6_showcase.png" title="Showcase">
 
-## Like or hate this plugin?
-Let us know. 
-
-smallmultiples.com.au
-
-info@small.mu
+## Love it or hate it?
+Let us know. info@small.mu | @smallmultiples
 
 
 
