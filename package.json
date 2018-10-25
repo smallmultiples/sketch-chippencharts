@@ -1,0 +1,26 @@
+{
+  "name": "chippen-charts",
+  "version": "3.0.0",
+  "engines": {
+    "sketch": ">=3.0"
+  },
+  "skpm": {
+    "name": "Chippen charts",
+    "manifest": "src/manifest.json",
+    "main": "chippen-charts.sketchplugin",
+    "assets": [
+      "assets/**/*"
+    ]
+  },
+  "scripts": {
+    "build": "skpm-build",
+    "watch": "skpm-build --watch",
+    "start": "skpm-build --watch --run",
+    "postinstall": "npm run build && skpm-link"
+  },
+  "devDependencies": {
+    "@skpm/builder": "^0.5.2"
+  },
+  "repository": "https://github.com/smallmultiples/sketch-chippencharts.git",
+  "author": "Martin von Lupin"
+}
