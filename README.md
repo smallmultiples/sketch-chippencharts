@@ -19,7 +19,7 @@ This is a Sketch plugin for creating charts with random data for use in mockups.
 5. The size of you bars will be adjusted
 
 ### Settings
-#### Horizontal and vertical bar chart
+#### Horizontal or vertical bar chart
 Chippen Chart detects wheter you are about to create a vertical or horizontal bar chart using the x and y-position of your selected layers. If there is no common x or y-value it will by default apply the logic for vertical bars.
 
 #### Min and max size (pixel)
