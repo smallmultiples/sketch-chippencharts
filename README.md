@@ -57,7 +57,7 @@ Besindes random numbers you can choose between linear trends and natural trends.
 <img width="855" height="566" src="https://raw.githubusercontent.com/smallmultiples/sketch-chippencharts/master/images/6_showcase.png" title="Showcase">
 
 ## Troubleshooting
-Unintended results will appear when the proportional resizing is set between a layers with and height. **Proportional resizing must be disabled!**
+Unintended results will appear when the proportional resizing is set between a layer's width and height. **Proportional resizing must be disabled** 🔓
 
 ## Love it or hate it?
 Let us know. info@small.mu | @smallmultiples
