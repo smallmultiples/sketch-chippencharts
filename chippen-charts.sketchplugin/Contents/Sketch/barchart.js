@@ -108,15 +108,46 @@ __webpack_require__.r(__webpack_exports__);
   log('~~ Run Chippen charts ~~');
   var doc = sketch__WEBPACK_IMPORTED_MODULE_0___default.a.getSelectedDocument();
   var selectedLayers = doc.selectedLayers;
+  /* 
+  		Analyse selected layers
+  	*/
+
   var isVertical = isVerticalBarchart(doc.selectedLayers);
   var minMax_fromSelection = getMinMax(doc.selectedLayers, isVertical);
+  /* 
+  	User input
+  */
+
   var response = myinput(minMax_fromSelection, doc.selectedLayers.layers.length);
   var minMax = [response.min, response.max];
-  var myRandomSlots = twoRandomSlots(selectedLayers.layers.length, 'Random');
 
   if (response.code !== 1000) {
     return;
   }
+
+  var myRandomSlots = [];
+
+  if (response.trendTypeInput == 0) {
+    // Only for random trend
+    // Set 2 random bars to min and max
+    myRandomSlots = twoRandomSlots(selectedLayers.layers.length, 'Random');
+  }
+  /* 
+  	UI message
+  */
+
+
+  var trendTypeInput_name = ["random data", "trend going up ↑ (linear)", "trend going up ↑ (natural)", "trend going down ↓ (linear)", "trend going down ↓ (natural)"];
+  var isVertical_name = "vertical";
+
+  if (!isVertical) {
+    isVertical_name = "horizontal";
+  }
+
+  sketch__WEBPACK_IMPORTED_MODULE_0___default.a.UI.message("".concat(doc.selectedLayers.length, " ").concat(isVertical_name, " bars with ").concat(trendTypeInput_name[response.trendTypeInput], " (").concat(minMax[0], "px\u2013").concat(minMax[1], "px)"));
+  /* 
+  	Changing size
+  */
 
   for (var i = 0; i < selectedLayers.layers.length; i++) {
     var baseLine = 0;

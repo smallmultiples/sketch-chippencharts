@@ -10,7 +10,7 @@
   "homepage": "https://github.com/smallmultiples/sketch-chippencharts",
   "commands": [
     {
-      "name": "Bar chart from selected rectangles",
+      "name": "Bar chart from selected layers",
       "identifier": "barchart",
       "script": "barchart.js"
     }
@@ -23,5 +23,5 @@
   },
   "identifier": "Chippen charts",
   "disableCocoaScriptPreprocessor": true,
-  "appcast": "https://raw.githubusercontent.com//master/.appcast.xml"
+  "appcast": "https://raw.githubusercontent.com/smallmultiples/sketch-chippencharts/master/.appcast.xml"
 }
