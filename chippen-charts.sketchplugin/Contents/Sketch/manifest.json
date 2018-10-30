@@ -12,7 +12,8 @@
     {
       "name": "Bar chart from selected layers",
       "identifier": "barchart",
-      "script": "barchart.js"
+      "script": "barchart.js",
+      "shortcut": "ctrl option command c"
     }
   ],
   "menu": {
