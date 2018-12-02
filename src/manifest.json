@@ -3,7 +3,6 @@
   "description": "Bar chart creator for your mockups using random data. Change the size of selected rectangles. Works for both horizontal and vertical bar charts. Made with love in Chippendale.",
   "compatibleVersion": 3,
   "bundleVersion": 1,
-  "version": "3.3.1",
   "icon": "smubar.png",
   "author": "Martin von Lupin",
   "authorEmail": "martin@small.mu\n",
