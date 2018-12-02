@@ -1,6 +1,6 @@
 {
   "name": "chippen-charts",
-  "version": "3.3.2",
+  "version": "3.3.3",
   "engines": {
     "sketch": ">=3.0"
   },
