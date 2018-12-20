@@ -14,7 +14,7 @@ This is a Sketch plugin for creating charts with random or user defined data for
 
 #### Random values
 
-If you don't have data yet, but still want to design a bar chart for your mockup, you can use the option to apply random values. You can also apply not-so-random values when choosing trend up or trend down.
+If you don't have data yet but still want to design a bar chart for your mockup, you can use the option to apply random values. You can also apply not-so-random values when choosing trend up or trend down.
 
 <img width="888" src="https://raw.githubusercontent.com/smallmultiples/sketch-chippencharts/master/images/showcase1-o.gif" title="How Chippen charts works">
 
@@ -22,13 +22,13 @@ If you don't have data yet, but still want to design a bar chart for your mockup
 
 If you have data that you want to apply to your chart this option is for you. You can even copy / paste from Excel columns or rows. How cool is that, right? In case your number values don't exactly match your desired pixel values, you have the option to apply a multiplier or set a maximum height. By default values don't get scaled.
 
-<img width="888" src="/Users/martin 1/Documents/_sketchassets/myplugins/sketch-chippencharts/images/showcase2-definedValues.gif" title="How Chippen charts works">
+<img width="888" src="https://raw.githubusercontent.com/smallmultiples/sketch-chippencharts/master/images/showcase2-definedValues.gif" title="How Chippen charts works">
 
 #### Dialog boxes for random and user defined action
 
 Those dialog boxes give you a good summary of what the plugin is capable of. Just have a look at the various input options.
 
-<img width="888" src="/Users/martin 1/Documents/_sketchassets/myplugins/sketch-chippencharts/images/dialogs.png" title="How Chippen charts works">
+<img width="888" src="https://raw.githubusercontent.com/smallmultiples/sketch-chippencharts/master/images/dialogs.png" title="How Chippen charts works">
 
 
 
