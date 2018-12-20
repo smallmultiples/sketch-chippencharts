@@ -8,12 +8,29 @@
 </div>
 <br/>
 
-This is a Sketch plugin for creating charts with random data for use in mockups. Change the size of selected rectangles. Chose between random and linear. Works for both horizontal and vertical bar charts. Made with love by [Small Multiples](https://smallmultiples.com.au/) in Chippendale.
-
+This is a Sketch plugin for creating charts with random or user defined data for use in mockups. Change the size of selected rectangles. Chose between random and linear. Works for both horizontal and vertical bar charts. Made with love by [Small Multiples](https://smallmultiples.com.au/) in Chippendale.
 
 ## How it works
 
+#### Random values
+
+If you don't have data yet, but still want to design a bar chart for your mockup, you can use the option to apply random values. You can also apply not-so-random values when choosing trend up or trend down.
+
 <img width="888" src="https://raw.githubusercontent.com/smallmultiples/sketch-chippencharts/master/images/showcase1-o.gif" title="How Chippen charts works">
+
+#### User defined values
+
+If you have data that you want to apply to your chart this option is for you. You can even copy / paste from Excel columns or rows. How cool is that, right? In case your number values don't exactly match your desired pixel values, you have the option to apply a multiplier or set a maximum height. By default values don't get scaled.
+
+<img width="888" src="/Users/martin 1/Documents/_sketchassets/myplugins/sketch-chippencharts/images/showcase2-definedValues.gif" title="How Chippen charts works">
+
+#### Dialog boxes for random and user defined action
+
+Those dialog boxes give you a good summary of what the plugin is capable of. Just have a look at the various input options.
+
+<img width="888" src="/Users/martin 1/Documents/_sketchassets/myplugins/sketch-chippencharts/images/dialogs.png" title="How Chippen charts works">
+
+
 
 ### Workflow
 1. **Create** desired amount of rectangles
@@ -59,6 +76,17 @@ Besindes random numbers you can choose between linear trends and natural trends.
 
 #### Showcase of different types
 <img width="855" height="566" src="https://raw.githubusercontent.com/smallmultiples/sketch-chippencharts/master/images/6_showcase.png" title="Showcase">
+
+## Version history
+
+#### 3.4 
+
+- Introducing new feature: Create bar charts using user defined values
+- Enhancements to dialog design
+
+#### 3.3.3 
+
+Fixing update issues
 
 ## Troubleshooting
 Unintended results will appear when the proportional resizing is set between a layer's width and height. **Proportional resizing must be disabled** 🔓
