@@ -6,7 +6,7 @@ export default function() {
 	const doc = sketch.getSelectedDocument()
 	const selectedLayers = doc.selectedLayers
 
-/* 
+	/* 
 		Analyse selected layers
 	*/
 	
@@ -192,16 +192,16 @@ function myinput(myMinMax=[20,100], numOfBars=""){
 		}
 
 		// Create initial view panel
-	 	var width = 260
+	 	var width = 280
 	 	var height = 40
 	 	var view = NSView.alloc().initWithFrame(NSMakeRect(0, 0, width, height))
 
 	 	// Min Max input
-	 	var minInput = NSTextField.alloc().initWithFrame(NSMakeRect(0.0, 15.0, 120.0, 25.0));
+	 	var minInput = NSTextField.alloc().initWithFrame(NSMakeRect(0.0, 15.0, 130, 25.0));
 	        minInput.cell().setPlaceholderString(myMinMax[0] + " (min)");
 	    view.addSubview(minInput);
 
-	    var maxInput = NSTextField.alloc().initWithFrame(NSMakeRect(140, 15.0, 120.0, 25.0));
+	    var maxInput = NSTextField.alloc().initWithFrame(NSMakeRect(150, 15.0, 130, 25.0));
 	        maxInput.cell().setPlaceholderString(myMinMax[1] + " (max)");
 	    view.addSubview(maxInput);
 
@@ -237,22 +237,33 @@ function myinput(myMinMax=[20,100], numOfBars=""){
 
 		// Setup the window
 		var alert = COSAlertWindow.new()
-		if(numOfBars==""){
-			alert.setMessageText("Create your bar chart")
+		if(numOfBars==1){
+			alert.setMessageText(`Create your random bar chart \nwith 1 selected layer`)
 		}else{
-			alert.setMessageText("Create your bar chart ("+numOfBars+" bars selected)")
+			alert.setMessageText(`Create your random bar chart \nwith ${numOfBars} layers selected`)
 		}
 		
 		alert.addButtonWithTitle("Run")
 		alert.addButtonWithTitle("Cancel")
-		alert.addTextLabelWithValue("Define extrema of bars ");
+		alert.setInformativeText(`This is for a bar chart where random values are applied \nto the layers of your selection.`)
+		
+		var extrema_label = createLabel("Define extrema of bars", 12, true, NSMakeRect(0, 0, width, 16));
+		alert.addAccessoryView(extrema_label)
+				
+		//alert.addTextLabelWithValue("Define extrema of bars");
 		alert.alert().window().setInitialFirstResponder(minInput)
 	 	alert.addAccessoryView(view)
-	 	alert.addTextLabelWithValue("Specify the desired trend");
+	 	
+		var trend_label = createLabel("Specify the desired trend", 12, true, NSMakeRect(0, 0, width, 16));
+		alert.addAccessoryView(trend_label)
+	 	//alert.addTextLabelWithValue("Specify the desired trend");
 	 	alert.addAccessoryView(trendTypeInput)
-	 	alert.addTextLabelWithValue("~ ~ ~");
-	 	alert.addTextLabelWithValue("Note:");
-	 	alert.addTextLabelWithValue("Make sure proportional scaling is disabled!");
+	 	
+	 	/*
+			Note
+	 	*/
+	 	var note_line1 = createLabel("\nPlease make sure proportional scaling is disabled", 11, false, NSMakeRect(0, 0, width, 16*2), 0.3);
+	 	alert.addAccessoryView(note_line1);
 
 	 	var responseCode = alert.runModal();
 
@@ -289,4 +300,38 @@ function isVerticalBarchart(arr){
 		}
 	}
 	return vertical
+}
+/*
+	Utils from Marc Bouchenoire
+	for easier UI design
+	https://github.com/bouchenoiremarc
+*/
+
+function createLabel(text, fontSize, bold, frame, opacity) {
+  var label = NSTextField.alloc().initWithFrame(frame)
+  label.setStringValue(text)
+  label.setFont((bold) ? NSFont.boldSystemFontOfSize(fontSize) : NSFont.systemFontOfSize(fontSize))
+  label.setBezeled(false)
+  label.setDrawsBackground(false)
+  label.setEditable(false)
+  label.setSelectable(false)
+  if (opacity) label.setAlphaValue(opacity)
+
+  return label
+}
+function createTextField(value, placeholder, frame) {
+  var textfield = NSTextField.alloc().initWithFrame(frame)
+  textfield.cell().setWraps(false);
+  textfield.cell().setScrollable(true);
+  textfield.setStringValue(value);
+  if (placeholder) textfield.setPlaceholderString(placeholder);
+
+  return textfield
+}
+
+function createDropdown(values, frame){
+  var dropdown = NSPopUpButton.alloc().initWithFrame(frame)
+  dropdown.addItemsWithTitles(values)
+
+  return dropdown
 }
