@@ -39,7 +39,7 @@ Get your clipboard loaded with amazing text content, fire up the plugin, and let
 
 You might wonder why you wouldn't wanna use the Sketch Data feature for that. The thing is, the Sketch Data feature does not preserve the order of elements, which this plugin does.
 
-<img width="888" src="/Users/martin 1/Documents/_sketchassets/myplugins/sketch-chippencharts/images/showcase-paste-clipboard-into-symbols.gif" title="Chippencharts sketch plugin: Paste clipboard text into symbol overrides">
+<img width="888" src="https://raw.githubusercontent.com/smallmultiples/sketch-chippencharts/master/images/showcase-paste-clipboard-into-symbols.gif" title="Chippencharts sketch plugin: Paste clipboard text into symbol overrides">
 
 ---
 
