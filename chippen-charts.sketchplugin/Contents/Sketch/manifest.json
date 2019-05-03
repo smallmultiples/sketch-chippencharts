@@ -15,19 +15,25 @@
       "shortcut": "ctrl option command c"
     },
     {
-      "name": "🎁 Defined bar chart from selected layers",
+      "name": "Defined bar chart from selected layers",
       "identifier": "nonrandombarchart",
       "script": "nonrandom-barchart.js"
+    },
+    {
+      "name": "💥 Paste clipboard text into symbols",
+      "identifier": "cliptexttosymbol",
+      "script": "cliptexttosymbol.js"
     }
   ],
   "menu": {
     "title": "Chippen charts",
     "items": [
       "barchart",
-      "nonrandombarchart"
+      "nonrandombarchart",
+      "cliptexttosymbol"
     ]
   },
-  "version": "3.3.3",
+  "version": "3.4.0",
   "identifier": "Chippen charts",
   "disableCocoaScriptPreprocessor": true,
   "appcast": "https://raw.githubusercontent.com/smallmultiples/sketch-chippencharts/master/.appcast.xml"
