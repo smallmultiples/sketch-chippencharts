@@ -240,7 +240,7 @@ function myinput(myMinMax=[20,100], numOfBars=""){
 		if(numOfBars==1){
 			alert.setMessageText(`Create your random bar chart \nwith 1 selected layer`)
 		}else{
-			alert.setMessageText(`Create your random bar chart \nwith ${numOfBars} layers selected`)
+			alert.setMessageText(`Create your random bar chart \nwith ${numOfBars} selected layers`)
 		}
 		
 		alert.addButtonWithTitle("Run")
