@@ -340,7 +340,7 @@ function myinput() {
     if (numOfBars == 1) {
       alert.setMessageText("Create your random bar chart \nwith 1 selected layer");
     } else {
-      alert.setMessageText("Create your random bar chart \nwith ".concat(numOfBars, " layers selected"));
+      alert.setMessageText("Create your random bar chart \nwith ".concat(numOfBars, " selected layers"));
     }
 
     alert.addButtonWithTitle("Run");
