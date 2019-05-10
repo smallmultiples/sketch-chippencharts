@@ -163,7 +163,7 @@ __webpack_require__.r(__webpack_exports__);
     } else {// baseline doesn't need correction when changing width in horizontal chart
     }
 
-    var newLength = 1; // STAGING
+    var newLength = 1;
 
     if (response.numbers[i] == undefined) {
       newLength = undefined; // no bar will be changed and no error will be thrown (it's undefined by default anyway)
@@ -258,7 +258,6 @@ function myinput() {
   var myBarHeightFromSelection = arguments.length > 2 ? arguments[2] : undefined;
   var myresponse = {
     code: null,
-    min: null,
     max: null,
     numbers: [],
     trendTypeInput: null
@@ -325,7 +324,8 @@ function myinput() {
     var option1_label = createLabel("Multiplier", 12, false, NSMakeRect(0, optionsView_height - 48, 130, 16));
     var option1_textField = createTextField("", "e.g. 1", NSMakeRect(0, optionsView_height - 81, 130, 25));
     var option2_label = createLabel("Max bar height (px)", 12, false, NSMakeRect(150, optionsView_height - 48, 130, 16));
-    var option2_textField = createTextField("", "e.g. " + myMinMax[1], NSMakeRect(150, optionsView_height - 81, 130, 25));
+    var option2_textField = createTextField("", "e.g. " + 100, NSMakeRect(150, optionsView_height - 81, 130, 25)); // prev version showed myMinMax[1] as option
+
     var options_info = createLabel("You have the option to define the scaling in case the supplied values don't match your desired pixel values. You can either define a multiplier or set a maximum bar height in pixel.", 11, false, NSMakeRect(0, 0, 260, 16 * 4));
     optionsView.addSubview(optionsLabel);
     optionsView.addSubview(optionsLabel_inlineNote);
@@ -397,8 +397,9 @@ function myinput() {
       myresponse.code = 1001;
     }
 
-    myresponse.min = myMinMax[0];
-    myresponse.max = myMinMax[1];
+    myresponse.max = myresponse.numbers.reduce(function (a, b) {
+      return Math.max(a, b);
+    });
   }
 
   return myresponse;

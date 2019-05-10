@@ -62,8 +62,7 @@ export default function() {
 		}
 		
 		var newLength = 1
-
-		// STAGING
+		
 		if(response.numbers[i] == undefined){
 			newLength = undefined // no bar will be changed and no error will be thrown (it's undefined by default anyway)
 		}else{
@@ -150,7 +149,6 @@ function getMinMax(arr, isVertical){
 function myinput(myMinMax=[20,100], numOfBars="", myBarHeightFromSelection){
 	var myresponse = {
 		code: null,
-		min: null,
 		max: null,
 		numbers: [],
 		trendTypeInput: null
@@ -232,7 +230,7 @@ function myinput(myMinMax=[20,100], numOfBars="", myBarHeightFromSelection){
 	 	var option1_textField = createTextField("", "e.g. 1", NSMakeRect(0, optionsView_height-81, 130, 25));
 
 	 	var option2_label = createLabel("Max bar height (px)", 12, false, NSMakeRect(150, optionsView_height-48, 130, 16));
-	 	var option2_textField = createTextField("", "e.g. " + myMinMax[1], NSMakeRect(150, optionsView_height-81, 130, 25));
+	 	var option2_textField = createTextField("", "e.g. " + 100, NSMakeRect(150, optionsView_height-81, 130, 25)); // prev version showed myMinMax[1] as option
 		
 		var options_info = createLabel("You have the option to define the scaling in case the supplied values don't match your desired pixel values. You can either define a multiplier or set a maximum bar height in pixel.", 11, false, NSMakeRect(0, 0, 260, 16*4))
 
@@ -308,8 +306,10 @@ function myinput(myMinMax=[20,100], numOfBars="", myBarHeightFromSelection){
 	 		// Cancel
 	 		myresponse.code = 1001
 	 	}
-	 	myresponse.min = myMinMax[0]
-	 	myresponse.max = myMinMax[1]
+	 	
+	 	myresponse.max = myresponse.numbers.reduce(function(a, b) {
+    		return Math.max(a, b);
+		});
 	 }
 	 return myresponse
 }
