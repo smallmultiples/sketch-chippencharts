@@ -89,18 +89,22 @@ Besindes random numbers you can choose between linear trends and natural trends.
 
 ## Version history
 
-#### 3.5
+##### 3.5.1
+
+- Bug fix for "Defined bar chart from selected layers" where the scale values from the input fields would not be used properly to calculate heights of bars
+
+##### 3.5
 
 - Introducing new feature: Paste clipboard text into symbol overrides
 
-#### 3.4 
+##### 3.4 
 
 - Introducing new feature: Create bar charts using user defined values
 - Enhancements to dialog design
 
-#### 3.3.3 
+##### 3.3.3 
 
-Fixing update issues
+- Fixing update issues
 
 ## Troubleshooting
 Unintended results will appear when the proportional resizing is set between a layer's width and height. **Proportional resizing must be disabled** 🔓
