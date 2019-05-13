@@ -30,10 +30,11 @@
     "items": [
       "barchart",
       "nonrandombarchart",
+      "-",
       "cliptexttosymbol"
     ]
   },
-  "version": "3.5.0",
+  "version": "3.5.1",
   "identifier": "Chippen charts",
   "disableCocoaScriptPreprocessor": true,
   "appcast": "https://raw.githubusercontent.com/smallmultiples/sketch-chippencharts/master/.appcast.xml"

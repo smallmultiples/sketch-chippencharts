@@ -30,6 +30,7 @@
     "items": [
       "barchart",
       "nonrandombarchart",
+      "-",
       "cliptexttosymbol"
     ]
   }
