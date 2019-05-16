@@ -155,14 +155,14 @@ __webpack_require__.r(__webpack_exports__);
   */
 
 
+  var baseLine = 0;
+
+  if (isVertical) {
+    baseLine = selectedLayers.layers[0].frame.y + selectedLayers.layers[0].frame.height;
+  } else {// baseline doesn't need correction when changing width in horizontal chart
+  }
+
   for (var i = 0; i < selectedLayers.layers.length; i++) {
-    var baseLine = 0;
-
-    if (isVertical) {
-      baseLine = selectedLayers.layers[0].frame.y + selectedLayers.layers[0].frame.height;
-    } else {// baseline doesn't need correction when changing width in horizontal chart
-    }
-
     var newLength = 1;
 
     if (response.numbers[i] == undefined) {
@@ -183,12 +183,22 @@ __webpack_require__.r(__webpack_exports__);
 
     if (isVertical) {
       // Change height
-      selectedLayers.layers[i].frame.height = newLength; // Move to baseline
+      selectedLayers.layers[i].frame.height = Math.abs(newLength); // Move to baseline
 
-      selectedLayers.layers[i].frame.y = baseLine - newLength;
+      if (newLength >= 0) {
+        // Reposition bars with positive values
+        selectedLayers.layers[i].frame.y = baseLine - Math.abs(newLength);
+      } else {
+        // Reposition bars with negative values
+        selectedLayers.layers[i].frame.y = baseLine;
+      }
     } else {
-      // Change Width
-      selectedLayers.layers[i].frame.width = newLength;
+      // Change width
+      selectedLayers.layers[i].frame.width = Math.abs(newLength); // Reposition bars with negative values
+
+      if (newLength < 0) {
+        selectedLayers.layers[i].frame.x = selectedLayers.layers[i].frame.x - Math.abs(newLength);
+      }
     }
   } // Notification
   // Alert in case number of selected layers 

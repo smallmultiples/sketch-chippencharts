@@ -89,6 +89,11 @@ Besindes random numbers you can choose between linear trends and natural trends.
 
 ## Version history
 
+##### 3.5.2
+
+- Bug fix for "Defined bar chart from selected layers" where bars wouldn't reposition correctly when first value is negative. 
+- Overall improvements in dealing with negative values.
+
 ##### 3.5.1
 
 - Bug fix for "Defined bar chart from selected layers" where the scale values from the input fields would not be used properly to calculate heights of bars
