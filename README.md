@@ -89,6 +89,11 @@ Besindes random numbers you can choose between linear trends and natural trends.
 
 ## Version history
 
+##### 3.5.3
+
+- Add data value to layer name in the format "Layer name {:value:}"
+- Optimise workflow with negative values for both, random and user-defined charts
+
 ##### 3.5.2
 
 - Bug fix for "Defined bar chart from selected layers" where bars wouldn't reposition correctly when first value is negative. 
