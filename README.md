@@ -89,6 +89,10 @@ Besindes random numbers you can choose between linear trends and natural trends.
 
 ## Version history
 
+##### 3.5.4
+
+- Bugfix for wrong adjustment of bars when data point has value zero
+
 ##### 3.5.3
 
 - Add data value to layer name in the format "Layer name {:value:}"

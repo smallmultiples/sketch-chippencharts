@@ -189,6 +189,12 @@ __webpack_require__.r(__webpack_exports__);
         // none
         newLength = response.numbers[i];
       }
+    } // Length can't be zero
+
+
+    if (newLength == 0) {
+      newLength = 0.5;
+      response.numbers[i] = 0.5;
     } // Change Width / Height
 
 
@@ -196,7 +202,7 @@ __webpack_require__.r(__webpack_exports__);
       // Change height
       selectedLayers.layers[i].frame.height = Math.abs(newLength); // Move to baseline
 
-      if (newLength >= 0) {
+      if (newLength > 0) {
         // Reposition bars with positive values
         selectedLayers.layers[i].frame.y = baseLine - Math.abs(newLength);
       } else {

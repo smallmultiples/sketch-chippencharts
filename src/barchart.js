@@ -110,12 +110,15 @@ export default function() {
 			newLength = Math.round(newLength * 10) / 10
 		}
 		
+		// Length can't be zero
+		if(newLength == 0){ newLength = 1 }
+
 		// Change Width / Height
 		if(isVertical){
 			// Change height
 			selectedLayers.layers[i].frame.height = Math.abs(newLength);
 			// Move to baseline
-			if(newLength>=0){
+			if(newLength > 0){
 				// Reposition bars with positive values
 				selectedLayers.layers[i].frame.y = baseLine - Math.abs(newLength);
 			}else{
@@ -137,6 +140,7 @@ export default function() {
 			
 		// Rename layer	
 		// Example: Rectangle ==> Rectangle {:12:}
+		log(`newLength: ${newLength}`)
 		selectedLayers.layers[i].name = renameLayer(selectedLayers.layers[i].name, newLength)
 	}
 }
