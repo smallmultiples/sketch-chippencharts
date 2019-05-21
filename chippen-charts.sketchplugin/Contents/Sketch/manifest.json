@@ -34,7 +34,7 @@
       "cliptexttosymbol"
     ]
   },
-  "version": "3.5.1",
+  "version": "3.5.2",
   "identifier": "Chippen charts",
   "disableCocoaScriptPreprocessor": true,
   "appcast": "https://raw.githubusercontent.com/smallmultiples/sketch-chippencharts/master/.appcast.xml"

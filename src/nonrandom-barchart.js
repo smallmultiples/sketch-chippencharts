@@ -98,7 +98,12 @@ export default function() {
 			if(newLength < 0){
 				selectedLayers.layers[i].frame.x = selectedLayers.layers[i].frame.x - Math.abs(newLength)
 			}
-		}			
+		}	
+
+		// Rename layer	
+		// Data value will be added to layer name
+		// Example: Rectangle ==> Rectangle {:12:}
+		selectedLayers.layers[i].name = renameLayer(selectedLayers.layers[i].name, response.numbers[i])
 	}
 		
 	// Notification
@@ -393,4 +398,30 @@ function createDropdown(values, frame){
   dropdown.addItemsWithTitles(values)
 
   return dropdown
+}
+
+function renameLayer(name, newVal){
+	
+	var a = name.split("{:")
+	var newName = name + " {:" + newVal + ":}";
+
+	if(a.length > 1){
+		var b = a[1].split(":}");
+		if(b.length == 1){return newName;}
+		var newName = a[0] + "{:" + newVal + ":}" + b[1];
+	}
+
+	return newName
+}
+
+function getValFromLayerName(name){
+	
+	var a = name.split("{:")
+	if(a.length == 1){return false;}
+	var b = a[1].split(":}");
+
+	var val = parseFloat(b[0])
+	if(isNaN(val)){return false;}
+	
+	return  val;
 }

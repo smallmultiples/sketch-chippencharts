@@ -199,7 +199,10 @@ __webpack_require__.r(__webpack_exports__);
       if (newLength < 0) {
         selectedLayers.layers[i].frame.x = selectedLayers.layers[i].frame.x - Math.abs(newLength);
       }
-    }
+    } // Rename layer	
+
+
+    selectedLayers.layers[i].name = renameLayer(selectedLayers.layers[i].name, response.numbers[i]);
   } // Notification
   // Alert in case number of selected layers 
   // does not match amount of numbers
@@ -484,6 +487,23 @@ function createDropdown(values, frame) {
   var dropdown = NSPopUpButton.alloc().initWithFrame(frame);
   dropdown.addItemsWithTitles(values);
   return dropdown;
+}
+
+function renameLayer(name, newVal) {
+  var a = name.split("{:");
+  var newName = name + " {:" + newVal + ":}";
+
+  if (a.length > 1) {
+    var b = a[1].split(":}");
+
+    if (b.length == 1) {
+      return newName;
+    }
+
+    var newName = a[0] + "{:" + newVal + ":}" + b[1];
+  }
+
+  return newName;
 }
 
 /***/ }),
