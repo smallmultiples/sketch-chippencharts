@@ -220,9 +220,15 @@ __webpack_require__.r(__webpack_exports__);
 
     if (isVertical) {
       // Change height
-      selectedLayers.layers[i].frame.height = newLength; // Move to baseline
+      selectedLayers.layers[i].frame.height = Math.abs(newLength); // Move to baseline
 
-      selectedLayers.layers[i].frame.y = baseLine - newLength;
+      if (newLength >= 0) {
+        // Reposition bars with positive values
+        selectedLayers.layers[i].frame.y = baseLine - Math.abs(newLength);
+      } else {
+        // Reposition bars with negative values
+        selectedLayers.layers[i].frame.y = baseLine;
+      }
     } else {
       // Reset position, just in case
       selectedLayers.layers[i].frame.x = baseLine; // Change Width
