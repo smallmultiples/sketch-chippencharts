@@ -149,14 +149,27 @@ __webpack_require__.r(__webpack_exports__);
   	Changing size
   */
 
-  for (var i = 0; i < selectedLayers.layers.length; i++) {
-    var baseLine = 0;
+  var firstBarVal = getValFromLayerName(selectedLayers.layers[0].name);
+  var baseLine = 0;
 
-    if (isVertical) {
-      baseLine = selectedLayers.layers[0].frame.y + selectedLayers.layers[0].frame.height;
-    } else {// baseline doesn't need correction when changing width in horizontal chart
+  if (isVertical) {
+    baseLine = selectedLayers.layers[0].frame.y + selectedLayers.layers[0].frame.height; // Adjust when first value of existing bar is negative 
+    // Based on layer name
+
+    if (firstBarVal < 0) {
+      baseLine = baseLine - Math.abs(firstBarVal);
     }
 
+    ;
+  } else {
+    if (firstBarVal >= 0) {
+      baseLine = selectedLayers.layers[0].frame.x;
+    } else if (firstBarVal < 0) {
+      baseLine = selectedLayers.layers[0].frame.x + Math.abs(firstBarVal);
+    }
+  }
+
+  for (var i = 0; i < selectedLayers.layers.length; i++) {
     var newLength = 1;
 
     if (response.trendTypeInput == 3 || response.trendTypeInput == 4) {
@@ -211,9 +224,19 @@ __webpack_require__.r(__webpack_exports__);
 
       selectedLayers.layers[i].frame.y = baseLine - newLength;
     } else {
-      // Change Width
-      selectedLayers.layers[i].frame.width = newLength;
-    }
+      // Reset position, just in case
+      selectedLayers.layers[i].frame.x = baseLine; // Change Width
+
+      selectedLayers.layers[i].frame.width = Math.abs(newLength); // Reposition bars with negative values
+
+      if (newLength < 0) {
+        selectedLayers.layers[i].frame.x = selectedLayers.layers[i].frame.x - Math.abs(newLength);
+      }
+    } // Rename layer	
+    // Example: Rectangle ==> Rectangle {:12:}
+
+
+    selectedLayers.layers[i].name = renameLayer(selectedLayers.layers[i].name, newLength);
   }
 });
 
@@ -391,15 +414,24 @@ function myinput() {
 
 function isVerticalBarchart(arr) {
   // arr needs to be doc.selectedLayers
-  var vertical = true;
+  var isVertical = true;
 
-  if (arr.layers.length >= 2) {
+  if (arr.layers.length >= 2 && arr.layers[0].frame.y != arr.layers[1].frame.y) {
+    // It's horizontal if
+    // 1. First two bars share same x value (works for positive values)
     if (arr.layers[0].frame.x == arr.layers[1].frame.x) {
-      vertical = false;
-    }
+      isVertical = false;
+    } // 2. Same y-baseline (works if first value is negative) 
+    // and they share same height
+    // ! Needs check if first / second val is negative
+    else if (arr.layers[0].frame.x + arr.layers[0].frame.width == arr.layers[1].frame.x && arr.layers[0].frame.height == arr.layers[1].frame.height) {
+        isVertical = false;
+      } else if (arr.layers[1].frame.x + arr.layers[1].frame.width == arr.layers[0].frame.x && arr.layers[0].frame.height == arr.layers[1].frame.height) {
+        isVertical = false;
+      }
   }
 
-  return vertical;
+  return isVertical;
 }
 /*
 	Utils from Marc Bouchenoire
@@ -433,6 +465,40 @@ function createDropdown(values, frame) {
   var dropdown = NSPopUpButton.alloc().initWithFrame(frame);
   dropdown.addItemsWithTitles(values);
   return dropdown;
+}
+
+function renameLayer(name, newVal) {
+  var a = name.split("{:");
+  var newName = name + " {:" + newVal + ":}";
+
+  if (a.length > 1) {
+    var b = a[1].split(":}");
+
+    if (b.length == 1) {
+      return newName;
+    }
+
+    var newName = a[0] + "{:" + newVal + ":}" + b[1];
+  }
+
+  return newName;
+}
+
+function getValFromLayerName(name) {
+  var a = name.split("{:");
+
+  if (a.length == 1) {
+    return false;
+  }
+
+  var b = a[1].split(":}");
+  var val = parseFloat(b[0]);
+
+  if (isNaN(val)) {
+    return false;
+  }
+
+  return val;
 }
 
 /***/ }),

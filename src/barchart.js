@@ -52,65 +52,86 @@ export default function() {
 		Changing size
 	*/
 
-		for(var i = 0; i<selectedLayers.layers.length; i++){
-			var baseLine = 0;
+	const firstBarVal = getValFromLayerName(selectedLayers.layers[0].name);
+	var baseLine = 0;
 
-			if(isVertical){
-				baseLine = selectedLayers.layers[0].frame.y + selectedLayers.layers[0].frame.height
-			}else{
-				// baseline doesn't need correction when changing width in horizontal chart
+	if(isVertical){
+		baseLine = selectedLayers.layers[0].frame.y + selectedLayers.layers[0].frame.height;
+		// Adjust when first value of existing bar is negative 
+		// Based on layer name
+		if(firstBarVal < 0){baseLine = baseLine - Math.abs(firstBarVal)};
+	}else{
+		if(firstBarVal >= 0){
+			baseLine = selectedLayers.layers[0].frame.x	
+		}else if(firstBarVal < 0){
+			baseLine = selectedLayers.layers[0].frame.x	+ Math.abs(firstBarVal)
+		}
+	}
+
+	for(var i = 0; i<selectedLayers.layers.length; i++){
+		
+		var newLength = 1
+
+		if(response.trendTypeInput == 3 || response.trendTypeInput == 4){
+			// reverse minMax if trend is going down
+			// and after that just use same code as for trend going up
+			minMax = [minMax[1], minMax[0]]
+			response.trendTypeInput = response.trendTypeInput-2
+		}
+
+		// Random
+		if(response.trendTypeInput == 0){
+			// random values between min and max
+			newLength = Math.floor(Math.random() * (minMax[1]-minMax[0]) ) + minMax[0]    
+			if(i == myRandomSlots[0]){
+				// force a random slot to be min
+				newLength = minMax[0]
 			}
-			
-			var newLength = 1
-
-			if(response.trendTypeInput == 3 || response.trendTypeInput == 4){
-				// reverse minMax if trend is going down
-				// and after that just use same code as for trend going up
-				minMax = [minMax[1], minMax[0]]
-				response.trendTypeInput = response.trendTypeInput-2
+			if(i == myRandomSlots[1]){
+				// force a random slot to be max
+				newLength = minMax[1]
 			}
-
-			// Random
-			if(response.trendTypeInput == 0){
-				// random values between min and max
-				newLength = Math.floor(Math.random() * (minMax[1]-minMax[0]) ) + minMax[0]    
-				if(i == myRandomSlots[0]){
-					// force a random slot to be min
-					newLength = minMax[0]
-				}
-				if(i == myRandomSlots[1]){
-					// force a random slot to be max
+		}
+		// Trend going up
+		if(response.trendTypeInput == 1 || response.trendTypeInput == 2){
+			var stepIncrease = (minMax[1] - minMax[0]) / selectedLayers.layers.length
+			if(response.trendTypeInput == 1){
+				newLength = (stepIncrease * i) + minMax[0]
+			}else if(response.trendTypeInput == 2){
+				var increase_random = stepIncrease * Math.random()
+				var plusOrMinus = Math.random() < 0.5 ? -1 : 1;
+				newLength = (stepIncrease * i) + minMax[0] + (increase_random * plusOrMinus)    
+			}
+			// force first and last to be min and max
+			if(i == 0){ newLength = minMax[0] }
+			else if(i == selectedLayers.layers.length-1){
 					newLength = minMax[1]
 				}
-			}
-			// Trend going up
-			if(response.trendTypeInput == 1 || response.trendTypeInput == 2){
-				var stepIncrease = (minMax[1] - minMax[0]) / selectedLayers.layers.length
-				if(response.trendTypeInput == 1){
-					newLength = (stepIncrease * i) + minMax[0]
-				}else if(response.trendTypeInput == 2){
-					var increase_random = stepIncrease * Math.random()
-					var plusOrMinus = Math.random() < 0.5 ? -1 : 1;
-					newLength = (stepIncrease * i) + minMax[0] + (increase_random * plusOrMinus)    
-				}
-				// force first and last to be min and max
-				if(i == 0){ newLength = minMax[0] }
-				else if(i == selectedLayers.layers.length-1){
-						newLength = minMax[1]
-					}
-				newLength = Math.round(newLength * 10) / 10
-			}
-			// Change Width / Height
-			if(isVertical){
-				// Change height
-				selectedLayers.layers[i].frame.height = newLength	
-				// Move to baseline
-				selectedLayers.layers[i].frame.y = baseLine - newLength
-			}else{
-				// Change Width
-				selectedLayers.layers[i].frame.width = newLength	
-			}			
+			newLength = Math.round(newLength * 10) / 10
 		}
+		// Change Width / Height
+		if(isVertical){
+			// Change height
+			selectedLayers.layers[i].frame.height = newLength	
+			// Move to baseline
+			selectedLayers.layers[i].frame.y = baseLine - newLength
+		}else{
+			// Reset position, just in case
+			selectedLayers.layers[i].frame.x = baseLine;
+
+			// Change Width
+			selectedLayers.layers[i].frame.width = Math.abs(newLength);
+
+			// Reposition bars with negative values
+			if(newLength < 0){
+				selectedLayers.layers[i].frame.x = selectedLayers.layers[i].frame.x - Math.abs(newLength)
+			}
+		}			
+			
+		// Rename layer	
+		// Example: Rectangle ==> Rectangle {:12:}
+		selectedLayers.layers[i].name = renameLayer(selectedLayers.layers[i].name, newLength)
+	}
 }
 
 function getMinMax(arr, isVertical){
@@ -290,17 +311,28 @@ function myinput(myMinMax=[20,100], numOfBars=""){
 	 return myresponse
 }
 
-
 function isVerticalBarchart(arr){
 	// arr needs to be doc.selectedLayers
-	var vertical = true
-	if(arr.layers.length >= 2){
+	var isVertical = true
+	if(arr.layers.length >= 2 && arr.layers[0].frame.y != arr.layers[1].frame.y){
+		// It's horizontal if
+		// 1. First two bars share same x value (works for positive values)
 		if(arr.layers[0].frame.x == arr.layers[1].frame.x){
-			vertical = false
+			isVertical = false;
+		}
+		// 2. Same y-baseline (works if first value is negative) 
+		// and they share same height
+		// ! Needs check if first / second val is negative
+		else if(arr.layers[0].frame.x + arr.layers[0].frame.width == arr.layers[1].frame.x && arr.layers[0].frame.height == arr.layers[1].frame.height){
+			isVertical = false;	
+		}
+		else if(arr.layers[1].frame.x + arr.layers[1].frame.width == arr.layers[0].frame.x && arr.layers[0].frame.height == arr.layers[1].frame.height){
+			isVertical = false;	
 		}
 	}
-	return vertical
+	return isVertical
 }
+
 /*
 	Utils from Marc Bouchenoire
 	for easier UI design
@@ -334,4 +366,30 @@ function createDropdown(values, frame){
   dropdown.addItemsWithTitles(values)
 
   return dropdown
+}
+
+function renameLayer(name, newVal){
+	
+	var a = name.split("{:")
+	var newName = name + " {:" + newVal + ":}";
+
+	if(a.length > 1){
+		var b = a[1].split(":}");
+		if(b.length == 1){return newName;}
+		var newName = a[0] + "{:" + newVal + ":}" + b[1];
+	}
+
+	return newName
+}
+
+function getValFromLayerName(name){
+	
+	var a = name.split("{:")
+	if(a.length == 1){return false;}
+	var b = a[1].split(":}");
+
+	var val = parseFloat(b[0])
+	if(isNaN(val)){return false;}
+	
+	return  val;
 }

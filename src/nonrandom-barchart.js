@@ -53,11 +53,19 @@ export default function() {
 	*/
 	
 	var baseLine = 0;
+	const firstBarVal = getValFromLayerName(selectedLayers.layers[0].name);
 
 	if(isVertical){
 		baseLine = selectedLayers.layers[0].frame.y + selectedLayers.layers[0].frame.height
+		// Adjust when first value of existing bar is negative 
+		// Based on layer name
+		if(firstBarVal < 0){baseLine = baseLine - Math.abs(firstBarVal)}
 	}else{
-		// baseline doesn't need correction when changing width in horizontal chart
+		if(firstBarVal >= 0){
+			baseLine = selectedLayers.layers[0].frame.x	
+		}else if(firstBarVal < 0){
+			baseLine = selectedLayers.layers[0].frame.x	+ Math.abs(firstBarVal)
+		}
 	}
 	
 	for(var i = 0; i<selectedLayers.layers.length; i++){
@@ -92,8 +100,12 @@ export default function() {
 				selectedLayers.layers[i].frame.y = baseLine;
 			}		
 		}else{
+			// Reset position, just in case
+			selectedLayers.layers[i].frame.x = baseLine;
+
 			// Change width
 			selectedLayers.layers[i].frame.width = Math.abs(newLength);
+			
 			// Reposition bars with negative values
 			if(newLength < 0){
 				selectedLayers.layers[i].frame.x = selectedLayers.layers[i].frame.x - Math.abs(newLength)
@@ -333,13 +345,24 @@ function myinput(myMinMax=[20,100], numOfBars="", myBarHeightFromSelection){
 
 function isVerticalBarchart(arr){
 	// arr needs to be doc.selectedLayers
-	var vertical = true
-	if(arr.layers.length >= 2){
+	var isVertical = true
+	if(arr.layers.length >= 2 && arr.layers[0].frame.y != arr.layers[1].frame.y){
+		// It's horizontal if
+		// 1. First two bars share same x value (works for positive values)
 		if(arr.layers[0].frame.x == arr.layers[1].frame.x){
-			vertical = false
+			isVertical = false;
+		}
+		// 2. Same y-baseline (works if first value is negative) 
+		// and they share same height
+		// ! Needs check if first / second val is negative
+		else if(arr.layers[0].frame.x + arr.layers[0].frame.width == arr.layers[1].frame.x && arr.layers[0].frame.height == arr.layers[1].frame.height){
+			isVertical = false;	
+		}
+		else if(arr.layers[1].frame.x + arr.layers[1].frame.width == arr.layers[0].frame.x && arr.layers[0].frame.height == arr.layers[1].frame.height){
+			isVertical = false;	
 		}
 	}
-	return vertical
+	return isVertical
 }
 
 function getBarHeight(arr, isVertical){

@@ -156,10 +156,21 @@ __webpack_require__.r(__webpack_exports__);
 
 
   var baseLine = 0;
+  var firstBarVal = getValFromLayerName(selectedLayers.layers[0].name);
 
   if (isVertical) {
-    baseLine = selectedLayers.layers[0].frame.y + selectedLayers.layers[0].frame.height;
-  } else {// baseline doesn't need correction when changing width in horizontal chart
+    baseLine = selectedLayers.layers[0].frame.y + selectedLayers.layers[0].frame.height; // Adjust when first value of existing bar is negative 
+    // Based on layer name
+
+    if (firstBarVal < 0) {
+      baseLine = baseLine - Math.abs(firstBarVal);
+    }
+  } else {
+    if (firstBarVal >= 0) {
+      baseLine = selectedLayers.layers[0].frame.x;
+    } else if (firstBarVal < 0) {
+      baseLine = selectedLayers.layers[0].frame.x + Math.abs(firstBarVal);
+    }
   }
 
   for (var i = 0; i < selectedLayers.layers.length; i++) {
@@ -193,13 +204,17 @@ __webpack_require__.r(__webpack_exports__);
         selectedLayers.layers[i].frame.y = baseLine;
       }
     } else {
-      // Change width
+      // Reset position, just in case
+      selectedLayers.layers[i].frame.x = baseLine; // Change width
+
       selectedLayers.layers[i].frame.width = Math.abs(newLength); // Reposition bars with negative values
 
       if (newLength < 0) {
         selectedLayers.layers[i].frame.x = selectedLayers.layers[i].frame.x - Math.abs(newLength);
       }
     } // Rename layer	
+    // Data value will be added to layer name
+    // Example: Rectangle ==> Rectangle {:12:}
 
 
     selectedLayers.layers[i].name = renameLayer(selectedLayers.layers[i].name, response.numbers[i]);
@@ -420,15 +435,24 @@ function myinput() {
 
 function isVerticalBarchart(arr) {
   // arr needs to be doc.selectedLayers
-  var vertical = true;
+  var isVertical = true;
 
-  if (arr.layers.length >= 2) {
+  if (arr.layers.length >= 2 && arr.layers[0].frame.y != arr.layers[1].frame.y) {
+    // It's horizontal if
+    // 1. First two bars share same x value (works for positive values)
     if (arr.layers[0].frame.x == arr.layers[1].frame.x) {
-      vertical = false;
-    }
+      isVertical = false;
+    } // 2. Same y-baseline (works if first value is negative) 
+    // and they share same height
+    // ! Needs check if first / second val is negative
+    else if (arr.layers[0].frame.x + arr.layers[0].frame.width == arr.layers[1].frame.x && arr.layers[0].frame.height == arr.layers[1].frame.height) {
+        isVertical = false;
+      } else if (arr.layers[1].frame.x + arr.layers[1].frame.width == arr.layers[0].frame.x && arr.layers[0].frame.height == arr.layers[1].frame.height) {
+        isVertical = false;
+      }
   }
 
-  return vertical;
+  return isVertical;
 }
 
 function getBarHeight(arr, isVertical) {
@@ -504,6 +528,23 @@ function renameLayer(name, newVal) {
   }
 
   return newName;
+}
+
+function getValFromLayerName(name) {
+  var a = name.split("{:");
+
+  if (a.length == 1) {
+    return false;
+  }
+
+  var b = a[1].split(":}");
+  var val = parseFloat(b[0]);
+
+  if (isNaN(val)) {
+    return false;
+  }
+
+  return val;
 }
 
 /***/ }),
