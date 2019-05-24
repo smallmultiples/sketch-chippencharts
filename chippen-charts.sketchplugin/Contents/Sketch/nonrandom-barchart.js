@@ -102,6 +102,8 @@ var exports =
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var sketch__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! sketch */ "sketch");
 /* harmony import */ var sketch__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(sketch__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _utils_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./utils.js */ "./src/utils.js");
+
  // documentation: https://developer.sketchapp.com/reference/api/
 
 /* harmony default export */ __webpack_exports__["default"] = (function () {
@@ -112,9 +114,9 @@ __webpack_require__.r(__webpack_exports__);
   	Analyse selected layers
   */
 
-  var isVertical = isVerticalBarchart(doc.selectedLayers);
+  var isVertical = Object(_utils_js__WEBPACK_IMPORTED_MODULE_1__["isVerticalBarchart"])(doc.selectedLayers);
   var minMax_fromSelection = getMinMax(doc.selectedLayers, isVertical);
-  var barHeight_fromSelection = getBarHeight(doc.selectedLayers, isVertical);
+  var barHeight_fromSelection = Object(_utils_js__WEBPACK_IMPORTED_MODULE_1__["getBarHeight"])(doc.selectedLayers, isVertical);
   /* 
   	User input
   */
@@ -156,7 +158,7 @@ __webpack_require__.r(__webpack_exports__);
 
 
   var baseLine = 0;
-  var firstBarVal = getValFromLayerName(selectedLayers.layers[0].name);
+  var firstBarVal = Object(_utils_js__WEBPACK_IMPORTED_MODULE_1__["getValFromLayerName"])(selectedLayers.layers[0].name);
 
   if (isVertical) {
     baseLine = selectedLayers.layers[0].frame.y + selectedLayers.layers[0].frame.height; // Adjust when first value of existing bar is negative 
@@ -223,7 +225,7 @@ __webpack_require__.r(__webpack_exports__);
     // Example: Rectangle ==> Rectangle {:12:}
 
 
-    selectedLayers.layers[i].name = renameLayer(selectedLayers.layers[i].name, response.numbers[i]);
+    selectedLayers.layers[i].name = Object(_utils_js__WEBPACK_IMPORTED_MODULE_1__["renameLayer"])(selectedLayers.layers[i].name, response.numbers[i]);
   } // Notification
   // Alert in case number of selected layers 
   // does not match amount of numbers
@@ -341,9 +343,9 @@ function myinput() {
 
     var alert_width = 280;
     var numInput_separatorOptions = ["Comma separated", "Space separated", "Tab separated (Excel row)", "Line break separated (Excel column)"];
-    var numInput_label = createLabel("Paste in your number values", 12, true, NSMakeRect(0, 0, alert_width, 16));
-    var numInput = createTextField(sampleNumbers, null, NSMakeRect(0, 0, alert_width, 25));
-    var numInput_separator = createDropdown([numInput_separatorOptions[0], numInput_separatorOptions[1], numInput_separatorOptions[2], numInput_separatorOptions[3]], NSMakeRect(-2, -1, 150, 24));
+    var numInput_label = Object(_utils_js__WEBPACK_IMPORTED_MODULE_1__["createLabel"])("Paste in your number values", 12, true, NSMakeRect(0, 0, alert_width, 16));
+    var numInput = Object(_utils_js__WEBPACK_IMPORTED_MODULE_1__["createTextField"])(sampleNumbers, null, NSMakeRect(0, 0, alert_width, 25));
+    var numInput_separator = Object(_utils_js__WEBPACK_IMPORTED_MODULE_1__["createDropdown"])([numInput_separatorOptions[0], numInput_separatorOptions[1], numInput_separatorOptions[2], numInput_separatorOptions[3]], NSMakeRect(-2, -1, 150, 24));
     alert.addAccessoryView(numInput_label);
     alert.addAccessoryView(numInput);
     alert.addAccessoryView(numInput_separator);
@@ -353,14 +355,14 @@ function myinput() {
 
     var optionsView_height = 85;
     var optionsView = NSView.alloc().initWithFrame(NSMakeRect(0, 0, alert_width, optionsView_height));
-    var optionsLabel = createLabel("Do you want to scale these values?", 12, true, NSMakeRect(0, optionsView_height - 26, alert_width, 16));
-    var optionsLabel_inlineNote = createLabel("(optional)", 12, false, NSMakeRect(215, optionsView_height - 26, alert_width, 16), 0.3);
-    var option1_label = createLabel("Multiplier", 12, false, NSMakeRect(0, optionsView_height - 48, 130, 16));
-    var option1_textField = createTextField("", "e.g. 1", NSMakeRect(0, optionsView_height - 81, 130, 25));
-    var option2_label = createLabel("Max bar height (px)", 12, false, NSMakeRect(150, optionsView_height - 48, 130, 16));
-    var option2_textField = createTextField("", "e.g. " + 100, NSMakeRect(150, optionsView_height - 81, 130, 25)); // prev version showed myMinMax[1] as option
+    var optionsLabel = Object(_utils_js__WEBPACK_IMPORTED_MODULE_1__["createLabel"])("Do you want to scale these values?", 12, true, NSMakeRect(0, optionsView_height - 26, alert_width, 16));
+    var optionsLabel_inlineNote = Object(_utils_js__WEBPACK_IMPORTED_MODULE_1__["createLabel"])("(optional)", 12, false, NSMakeRect(215, optionsView_height - 26, alert_width, 16), 0.3);
+    var option1_label = Object(_utils_js__WEBPACK_IMPORTED_MODULE_1__["createLabel"])("Multiplier", 12, false, NSMakeRect(0, optionsView_height - 48, 130, 16));
+    var option1_textField = Object(_utils_js__WEBPACK_IMPORTED_MODULE_1__["createTextField"])("", "e.g. 1", NSMakeRect(0, optionsView_height - 81, 130, 25));
+    var option2_label = Object(_utils_js__WEBPACK_IMPORTED_MODULE_1__["createLabel"])("Max bar height (px)", 12, false, NSMakeRect(150, optionsView_height - 48, 130, 16));
+    var option2_textField = Object(_utils_js__WEBPACK_IMPORTED_MODULE_1__["createTextField"])("", "e.g. " + 100, NSMakeRect(150, optionsView_height - 81, 130, 25)); // prev version showed myMinMax[1] as option
 
-    var options_info = createLabel("You have the option to define the scaling in case the supplied values don't match your desired pixel values. You can either define a multiplier or set a maximum bar height in pixel.", 11, false, NSMakeRect(0, 0, 260, 16 * 4));
+    var options_info = Object(_utils_js__WEBPACK_IMPORTED_MODULE_1__["createLabel"])("You have the option to define the scaling in case the supplied values don't match your desired pixel values. You can either define a multiplier or set a maximum bar height in pixel.", 11, false, NSMakeRect(0, 0, 260, 16 * 4));
     optionsView.addSubview(optionsLabel);
     optionsView.addSubview(optionsLabel_inlineNote);
     optionsView.addSubview(options_info);
@@ -374,7 +376,7 @@ function myinput() {
     Note
     */
 
-    var note_line1 = createLabel("Please make sure proportional scaling is disabled", 11, false, NSMakeRect(0, 0, alert_width + 10, 16), 0.3);
+    var note_line1 = Object(_utils_js__WEBPACK_IMPORTED_MODULE_1__["createLabel"])("Please make sure proportional scaling is disabled", 11, false, NSMakeRect(0, 0, alert_width + 10, 16), 0.3);
     alert.addAccessoryView(note_line1);
     /*
     RESPONSE
@@ -439,6 +441,142 @@ function myinput() {
   return myresponse;
 }
 
+/***/ }),
+
+/***/ "./src/utils.js":
+/*!**********************!*\
+  !*** ./src/utils.js ***!
+  \**********************/
+/*! exports provided: getSymbolInstances, onlyUnique, iterativeGapFilling, createLabel, createTextField, createDropdown, createCheckbox, getValFromLayerName, renameLayer, isVerticalBarchart, getBarHeight */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "getSymbolInstances", function() { return getSymbolInstances; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "onlyUnique", function() { return onlyUnique; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "iterativeGapFilling", function() { return iterativeGapFilling; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "createLabel", function() { return createLabel; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "createTextField", function() { return createTextField; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "createDropdown", function() { return createDropdown; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "createCheckbox", function() { return createCheckbox; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "getValFromLayerName", function() { return getValFromLayerName; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "renameLayer", function() { return renameLayer; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "isVerticalBarchart", function() { return isVerticalBarchart; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "getBarHeight", function() { return getBarHeight; });
+function getSymbolInstances(source, symbolMaster) {
+  // https://github.com/sonburn/
+  var symbolInstances = NSMutableArray.array();
+  source.sketchObject.pages().forEach(function (page) {
+    var predicate = NSPredicate.predicateWithFormat('className == %@ && symbolMaster.objectID == %@', 'MSSymbolInstance', symbolMaster.sketchObject.objectID());
+    page.children().filteredArrayUsingPredicate(predicate).forEach(function (instance) {
+      return symbolInstances.addObject(instance);
+    });
+  });
+  return symbolInstances;
+}
+function onlyUnique(value, index, self) {
+  return self.indexOf(value) === index;
+}
+function iterativeGapFilling(array, length) {
+  var newArray = [];
+
+  for (var i = 0; i < length; i++) {
+    var loop = Math.floor(i / array.length);
+    var index = i - loop * array.length;
+    newArray.push(array[index]);
+  }
+
+  return newArray;
+}
+/**********************/
+
+/*       POPUP        */
+
+/**********************/
+
+/*
+	Utils from Marc Bouchenoire
+	for easier UI design
+	https://github.com/bouchenoiremarc
+*/
+
+function createLabel(text, fontSize, bold, frame, opacity) {
+  var label = NSTextField.alloc().initWithFrame(frame);
+  label.setStringValue(text);
+  label.setFont(bold ? NSFont.boldSystemFontOfSize(fontSize) : NSFont.systemFontOfSize(fontSize));
+  label.setBezeled(false);
+  label.setDrawsBackground(false);
+  label.setEditable(false);
+  label.setSelectable(false);
+  if (opacity) label.setAlphaValue(opacity);
+  return label;
+}
+function createTextField(value, placeholder, frame) {
+  var textfield = NSTextField.alloc().initWithFrame(frame);
+  textfield.cell().setWraps(false);
+  textfield.cell().setScrollable(true);
+  textfield.setStringValue(value);
+  if (placeholder) textfield.setPlaceholderString(placeholder);
+  return textfield;
+}
+function createDropdown(values, frame) {
+  var dropdown = NSPopUpButton.alloc().initWithFrame(frame);
+  dropdown.addItemsWithTitles(values);
+  return dropdown;
+}
+function createCheckbox(text, checked, frame) {
+  checked = checked == false ? NSOffState : NSOnState;
+  var checkbox = NSButton.alloc().initWithFrame(frame);
+  checkbox.setButtonType(NSSwitchButton);
+  checkbox.setBezelStyle(0);
+  checkbox.setTitle(text);
+  checkbox.setState(checked);
+  return checkbox;
+}
+/**********************/
+
+/* VAL IN LAYER NAME  */
+
+/**********************/
+
+function getValFromLayerName(name) {
+  var a = name.split("{:");
+
+  if (a.length == 1) {
+    return false;
+  }
+
+  var b = a[1].split(":}");
+  var val = parseFloat(b[0]);
+
+  if (isNaN(val)) {
+    return false;
+  }
+
+  return val;
+}
+function renameLayer(name, newVal) {
+  var a = name.split("{:");
+  var newName = name + " {:" + newVal + ":}";
+
+  if (a.length > 1) {
+    var b = a[1].split(":}");
+
+    if (b.length == 1) {
+      return newName;
+    }
+
+    var newName = a[0] + "{:" + newVal + ":}" + b[1];
+  }
+
+  return newName;
+}
+/**********************/
+
+/*     BARCHART       */
+
+/**********************/
+
 function isVerticalBarchart(arr) {
   // arr needs to be doc.selectedLayers
   var isVertical = true;
@@ -460,6 +598,11 @@ function isVerticalBarchart(arr) {
 
   return isVertical;
 }
+/**********************/
+
+/* NON-RANDO BARCHART */
+
+/**********************/
 
 function getBarHeight(arr, isVertical) {
   // arr needs to be doc.selectedLayers
@@ -484,73 +627,6 @@ function getBarHeight(arr, isVertical) {
   }
 
   return barLength_str;
-}
-/*
-	Utils from Marc Bouchenoire
-	for easier UI design
-	https://github.com/bouchenoiremarc
-*/
-
-
-function createLabel(text, fontSize, bold, frame, opacity) {
-  var label = NSTextField.alloc().initWithFrame(frame);
-  label.setStringValue(text);
-  label.setFont(bold ? NSFont.boldSystemFontOfSize(fontSize) : NSFont.systemFontOfSize(fontSize));
-  label.setBezeled(false);
-  label.setDrawsBackground(false);
-  label.setEditable(false);
-  label.setSelectable(false);
-  if (opacity) label.setAlphaValue(opacity);
-  return label;
-}
-
-function createTextField(value, placeholder, frame) {
-  var textfield = NSTextField.alloc().initWithFrame(frame);
-  textfield.cell().setWraps(false);
-  textfield.cell().setScrollable(true);
-  textfield.setStringValue(value);
-  if (placeholder) textfield.setPlaceholderString(placeholder);
-  return textfield;
-}
-
-function createDropdown(values, frame) {
-  var dropdown = NSPopUpButton.alloc().initWithFrame(frame);
-  dropdown.addItemsWithTitles(values);
-  return dropdown;
-}
-
-function renameLayer(name, newVal) {
-  var a = name.split("{:");
-  var newName = name + " {:" + newVal + ":}";
-
-  if (a.length > 1) {
-    var b = a[1].split(":}");
-
-    if (b.length == 1) {
-      return newName;
-    }
-
-    var newName = a[0] + "{:" + newVal + ":}" + b[1];
-  }
-
-  return newName;
-}
-
-function getValFromLayerName(name) {
-  var a = name.split("{:");
-
-  if (a.length == 1) {
-    return false;
-  }
-
-  var b = a[1].split(":}");
-  var val = parseFloat(b[0]);
-
-  if (isNaN(val)) {
-    return false;
-  }
-
-  return val;
 }
 
 /***/ }),

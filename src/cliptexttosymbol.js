@@ -1,9 +1,9 @@
 import sketch from 'sketch'
+import { onlyUnique, iterativeGapFilling, createLabel, createDropdown, createCheckbox } from "./utils.js";
 // documentation: https://developer.sketchapp.com/reference/api/
 // https://github.com/sonburn/symbol-instance-locator/blob/master/Symbol%20Instance%20Locator.sketchplugin/Contents/Sketch/script.js
 
 var symbolOverrideLayers;
-
 
 export default function() {
 	log('~~ Run Chippen charts ~~')
@@ -182,78 +182,4 @@ export default function() {
 		}
 	sketch.UI.message(`Text from clipboard was pasted into ${symbolsWithOverrides.length} symbols`)
 
-}
-
-
-function getSymbolInstances(source,symbolMaster) {
-	// https://github.com/sonburn/
-	var symbolInstances = NSMutableArray.array();
-
-	source.sketchObject.pages().forEach(function(page){
-		var predicate = NSPredicate.predicateWithFormat('className == %@ && symbolMaster.objectID == %@','MSSymbolInstance',symbolMaster.sketchObject.objectID());
-
-		page.children().filteredArrayUsingPredicate(predicate).forEach(instance => symbolInstances.addObject(instance));
-	});
-
-	return symbolInstances;
-}
-
-function onlyUnique(value, index, self) { 
-    return self.indexOf(value) === index;
-}
-
-function iterativeGapFilling(array, length){
-	var newArray = [];
-	for(var i=0; i<length; i++){
-    	var loop = Math.floor(i/array.length);
- 		var index = i-(loop*array.length);
-    	newArray.push(array[index]);
-	}
-	return newArray;
-}
-
-/*
-	Utils from Marc Bouchenoire
-	for easier UI design
-	https://github.com/bouchenoiremarc
-*/
-
-function createLabel(text, fontSize, bold, frame, opacity) {
-  var label = NSTextField.alloc().initWithFrame(frame)
-  label.setStringValue(text)
-  label.setFont((bold) ? NSFont.boldSystemFontOfSize(fontSize) : NSFont.systemFontOfSize(fontSize))
-  label.setBezeled(false)
-  label.setDrawsBackground(false)
-  label.setEditable(false)
-  label.setSelectable(false)
-  if (opacity) label.setAlphaValue(opacity)
-
-  return label
-}
-function createTextField(value, placeholder, frame) {
-  var textfield = NSTextField.alloc().initWithFrame(frame)
-  textfield.cell().setWraps(false);
-  textfield.cell().setScrollable(true);
-  textfield.setStringValue(value);
-  if (placeholder) textfield.setPlaceholderString(placeholder);
-
-  return textfield
-}
-
-function createDropdown(values, frame){
-  var dropdown = NSPopUpButton.alloc().initWithFrame(frame)
-  dropdown.addItemsWithTitles(values)
-
-  return dropdown
-}
-
-function createCheckbox(text, checked, frame) {
-    checked = (checked == false) ? NSOffState : NSOnState
-    var checkbox = NSButton.alloc().initWithFrame(frame)
-    checkbox.setButtonType(NSSwitchButton)
-    checkbox.setBezelStyle(0)
-    checkbox.setTitle(text)
-    checkbox.setState(checked)
-
-    return checkbox
 }

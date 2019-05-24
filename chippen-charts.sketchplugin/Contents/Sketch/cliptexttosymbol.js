@@ -102,6 +102,8 @@ var exports =
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var sketch__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! sketch */ "sketch");
 /* harmony import */ var sketch__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(sketch__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _utils_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./utils.js */ "./src/utils.js");
+
  // documentation: https://developer.sketchapp.com/reference/api/
 // https://github.com/sonburn/symbol-instance-locator/blob/master/Symbol%20Instance%20Locator.sketchplugin/Contents/Sketch/script.js
 
@@ -159,7 +161,7 @@ var symbolOverrideLayers;
   var symbolsIDs = symbolsWithOverrides.map(function (symbol) {
     return symbol.symbolId;
   });
-  var uniqueSymbolIDs = symbolsIDs.filter(onlyUnique);
+  var uniqueSymbolIDs = symbolsIDs.filter(_utils_js__WEBPACK_IMPORTED_MODULE_1__["onlyUnique"]);
 
   if (uniqueSymbolIDs.length > 1) {
     sketch__WEBPACK_IMPORTED_MODULE_0___default.a.UI.alert(pluginName, "Please use only symbols of the same kind. Maybe you want to try to use only symbols like \"".concat(symbolsWithOverrides[0].name, "\"."));
@@ -211,8 +213,8 @@ var symbolOverrideLayers;
   // OVERRIDE DROPDOWN
 
   var alert_width = 280;
-  var overrideOptions_label = createLabel("What override shall it be? ", 12, true, NSMakeRect(0, 0, alert_width, 16));
-  var overrideOptions_dropdown = createDropdown(overrideOptions, NSMakeRect(-2, -1, 280, 24));
+  var overrideOptions_label = Object(_utils_js__WEBPACK_IMPORTED_MODULE_1__["createLabel"])("What override shall it be? ", 12, true, NSMakeRect(0, 0, alert_width, 16));
+  var overrideOptions_dropdown = Object(_utils_js__WEBPACK_IMPORTED_MODULE_1__["createDropdown"])(overrideOptions, NSMakeRect(-2, -1, 280, 24));
 
   if (overrideOptions.length > 1) {
     alert.addAccessoryView(overrideOptions_label);
@@ -220,7 +222,7 @@ var symbolOverrideLayers;
   } // REVERSE CHECKBOX
 
 
-  var reverse_checkbox = createCheckbox("Reverse order of clipboard text", false, NSMakeRect(-2, -1, 280, 24));
+  var reverse_checkbox = Object(_utils_js__WEBPACK_IMPORTED_MODULE_1__["createCheckbox"])("Reverse order of clipboard text", false, NSMakeRect(-2, -1, 280, 24));
 
   if (pasteboardLines.length > 1) {
     alert.addAccessoryView(reverse_checkbox);
@@ -269,7 +271,7 @@ var symbolOverrideLayers;
   }
 
   if (symbolsWithOverrides.length > clip.length) {
-    var clip_filled = iterativeGapFilling(clip, symbolsWithOverrides.length);
+    var clip_filled = Object(_utils_js__WEBPACK_IMPORTED_MODULE_1__["iterativeGapFilling"])(clip, symbolsWithOverrides.length);
     clip = clip_filled;
   }
 
@@ -280,6 +282,28 @@ var symbolOverrideLayers;
   sketch__WEBPACK_IMPORTED_MODULE_0___default.a.UI.message("Text from clipboard was pasted into ".concat(symbolsWithOverrides.length, " symbols"));
 });
 
+/***/ }),
+
+/***/ "./src/utils.js":
+/*!**********************!*\
+  !*** ./src/utils.js ***!
+  \**********************/
+/*! exports provided: getSymbolInstances, onlyUnique, iterativeGapFilling, createLabel, createTextField, createDropdown, createCheckbox, getValFromLayerName, renameLayer, isVerticalBarchart, getBarHeight */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "getSymbolInstances", function() { return getSymbolInstances; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "onlyUnique", function() { return onlyUnique; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "iterativeGapFilling", function() { return iterativeGapFilling; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "createLabel", function() { return createLabel; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "createTextField", function() { return createTextField; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "createDropdown", function() { return createDropdown; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "createCheckbox", function() { return createCheckbox; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "getValFromLayerName", function() { return getValFromLayerName; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "renameLayer", function() { return renameLayer; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "isVerticalBarchart", function() { return isVerticalBarchart; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "getBarHeight", function() { return getBarHeight; });
 function getSymbolInstances(source, symbolMaster) {
   // https://github.com/sonburn/
   var symbolInstances = NSMutableArray.array();
@@ -291,11 +315,9 @@ function getSymbolInstances(source, symbolMaster) {
   });
   return symbolInstances;
 }
-
 function onlyUnique(value, index, self) {
   return self.indexOf(value) === index;
 }
-
 function iterativeGapFilling(array, length) {
   var newArray = [];
 
@@ -307,12 +329,17 @@ function iterativeGapFilling(array, length) {
 
   return newArray;
 }
+/**********************/
+
+/*       POPUP        */
+
+/**********************/
+
 /*
 	Utils from Marc Bouchenoire
 	for easier UI design
 	https://github.com/bouchenoiremarc
 */
-
 
 function createLabel(text, fontSize, bold, frame, opacity) {
   var label = NSTextField.alloc().initWithFrame(frame);
@@ -325,7 +352,6 @@ function createLabel(text, fontSize, bold, frame, opacity) {
   if (opacity) label.setAlphaValue(opacity);
   return label;
 }
-
 function createTextField(value, placeholder, frame) {
   var textfield = NSTextField.alloc().initWithFrame(frame);
   textfield.cell().setWraps(false);
@@ -334,13 +360,11 @@ function createTextField(value, placeholder, frame) {
   if (placeholder) textfield.setPlaceholderString(placeholder);
   return textfield;
 }
-
 function createDropdown(values, frame) {
   var dropdown = NSPopUpButton.alloc().initWithFrame(frame);
   dropdown.addItemsWithTitles(values);
   return dropdown;
 }
-
 function createCheckbox(text, checked, frame) {
   checked = checked == false ? NSOffState : NSOnState;
   var checkbox = NSButton.alloc().initWithFrame(frame);
@@ -349,6 +373,101 @@ function createCheckbox(text, checked, frame) {
   checkbox.setTitle(text);
   checkbox.setState(checked);
   return checkbox;
+}
+/**********************/
+
+/* VAL IN LAYER NAME  */
+
+/**********************/
+
+function getValFromLayerName(name) {
+  var a = name.split("{:");
+
+  if (a.length == 1) {
+    return false;
+  }
+
+  var b = a[1].split(":}");
+  var val = parseFloat(b[0]);
+
+  if (isNaN(val)) {
+    return false;
+  }
+
+  return val;
+}
+function renameLayer(name, newVal) {
+  var a = name.split("{:");
+  var newName = name + " {:" + newVal + ":}";
+
+  if (a.length > 1) {
+    var b = a[1].split(":}");
+
+    if (b.length == 1) {
+      return newName;
+    }
+
+    var newName = a[0] + "{:" + newVal + ":}" + b[1];
+  }
+
+  return newName;
+}
+/**********************/
+
+/*     BARCHART       */
+
+/**********************/
+
+function isVerticalBarchart(arr) {
+  // arr needs to be doc.selectedLayers
+  var isVertical = true;
+
+  if (arr.layers.length >= 2 && arr.layers[0].frame.y != arr.layers[1].frame.y) {
+    // It's horizontal if
+    // 1. First two bars share same x value (works for positive values)
+    if (arr.layers[0].frame.x == arr.layers[1].frame.x) {
+      isVertical = false;
+    } // 2. Same y-baseline (works if first value is negative) 
+    // and they share same height
+    // ! Needs check if first / second val is negative
+    else if (arr.layers[0].frame.x + arr.layers[0].frame.width == arr.layers[1].frame.x && arr.layers[0].frame.height == arr.layers[1].frame.height) {
+        isVertical = false;
+      } else if (arr.layers[1].frame.x + arr.layers[1].frame.width == arr.layers[0].frame.x && arr.layers[0].frame.height == arr.layers[1].frame.height) {
+        isVertical = false;
+      }
+  }
+
+  return isVertical;
+}
+/**********************/
+
+/* NON-RANDO BARCHART */
+
+/**********************/
+
+function getBarHeight(arr, isVertical) {
+  // arr needs to be doc.selectedLayers
+  var barLength_str = "";
+
+  for (var i = 0; i < arr.layers.length; i++) {
+    var thisLength = undefined;
+
+    if (isVertical) {
+      thisLength = arr.layers[i].frame.height.toFixed(2); // reduce to 2 decimals
+    } else {
+      thisLength = arr.layers[i].frame.width.toFixed(2); // reduce to 2 decimals
+    }
+
+    thisLength = parseFloat(thisLength); // to remove decimals from integers
+
+    if (i == 0) {
+      barLength_str = "" + thisLength;
+    } else {
+      barLength_str = barLength_str + "," + thisLength;
+    }
+  }
+
+  return barLength_str;
 }
 
 /***/ }),
