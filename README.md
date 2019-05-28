@@ -13,6 +13,12 @@ Furthermore, the latest feature allows you to paste text from the clipboard stra
 
 Made with love by [Small Multiples](https://smallmultiples.com.au/) in Chippendale, Sydney.
 
+## How to install
+
+1. Click the `Clone or download` button in the top right and choose `Download Zip`
+2. Save the ZIP file to your harddrive
+3. Open the downloaded file and double click the sketch file `chippen-charts.sketchplugin`
+4. The plugin is installed and you can use it via the menu `Plugins` > `Chippen charts`
 
 
 ## Features
