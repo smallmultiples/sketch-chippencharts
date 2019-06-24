@@ -373,6 +373,14 @@ function myinput() {
     alert.addAccessoryView(optionsView);
     alert.addAccessoryView(options_info);
     /*
+    Key navigation (popup)
+    */
+
+    alert.alert().window().setInitialFirstResponder(numInput);
+    numInput.setNextKeyView(option1_textField);
+    option1_textField.setNextKeyView(option2_textField);
+    option2_textField.setNextKeyView(numInput);
+    /*
     Note
     */
 

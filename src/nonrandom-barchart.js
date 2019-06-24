@@ -12,6 +12,7 @@ export default function() {
 	*/
 	
 	var isVertical = isVerticalBarchart(doc.selectedLayers)
+
 	var minMax_fromSelection = getMinMax(doc.selectedLayers, isVertical)
 	var barHeight_fromSelection = getBarHeight(doc.selectedLayers, isVertical)
 
@@ -252,6 +253,8 @@ function myinput(myMinMax=[20,100], numOfBars="", myBarHeightFromSelection){
 	 	alert.addAccessoryView(numInput);
 	 	alert.addAccessoryView(numInput_separator);
 
+	 	
+
 	 	/*
 			Options
 	 	*/
@@ -281,6 +284,17 @@ function myinput(myMinMax=[20,100], numOfBars="", myBarHeightFromSelection){
 
 	 	alert.addAccessoryView(optionsView); 
 	 	alert.addAccessoryView(options_info)
+
+
+	 	/*
+			Key navigation (popup)
+	 	*/
+
+	 	alert.alert().window().setInitialFirstResponder(numInput);
+	 	numInput.setNextKeyView(option1_textField)
+	 	option1_textField.setNextKeyView(option2_textField)
+	 	option2_textField.setNextKeyView(numInput)
+
 
 	 	/*
 			Note

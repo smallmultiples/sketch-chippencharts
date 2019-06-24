@@ -283,7 +283,6 @@ function myinput(myMinMax=[20,100], numOfBars=""){
 		alert.addAccessoryView(extrema_label)
 				
 		//alert.addTextLabelWithValue("Define extrema of bars");
-		alert.alert().window().setInitialFirstResponder(minInput)
 	 	alert.addAccessoryView(view)
 	 	
 		var trend_label = createLabel("Specify the desired trend", 12, true, NSMakeRect(0, 0, width, 16));
@@ -291,6 +290,16 @@ function myinput(myMinMax=[20,100], numOfBars=""){
 	 	//alert.addTextLabelWithValue("Specify the desired trend");
 	 	alert.addAccessoryView(trendTypeInput)
 	 	
+	 	
+		/*
+			Key navigation (popup)
+	 	*/
+
+	 	alert.alert().window().setInitialFirstResponder(minInput)
+	 	minInput.setNextKeyView(maxInput)
+	 	maxInput.setNextKeyView(minInput)
+
+
 	 	/*
 			Note
 	 	*/

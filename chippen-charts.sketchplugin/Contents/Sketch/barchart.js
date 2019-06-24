@@ -385,12 +385,18 @@ function myinput() {
     var extrema_label = Object(_utils_js__WEBPACK_IMPORTED_MODULE_1__["createLabel"])("Define extrema of bars", 12, true, NSMakeRect(0, 0, width, 16));
     alert.addAccessoryView(extrema_label); //alert.addTextLabelWithValue("Define extrema of bars");
 
-    alert.alert().window().setInitialFirstResponder(minInput);
     alert.addAccessoryView(view);
     var trend_label = Object(_utils_js__WEBPACK_IMPORTED_MODULE_1__["createLabel"])("Specify the desired trend", 12, true, NSMakeRect(0, 0, width, 16));
     alert.addAccessoryView(trend_label); //alert.addTextLabelWithValue("Specify the desired trend");
 
     alert.addAccessoryView(trendTypeInput);
+    /*
+    	Key navigation (popup)
+    	*/
+
+    alert.alert().window().setInitialFirstResponder(minInput);
+    minInput.setNextKeyView(maxInput);
+    maxInput.setNextKeyView(minInput);
     /*
     Note
     */
