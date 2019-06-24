@@ -19,7 +19,7 @@ export default function() {
 		User input
 	*/
 
-	var response = myinput(minMax_fromSelection, doc.selectedLayers.layers.length)
+	var response = myinput(minMax_fromSelection, doc.selectedLayers.layers.length, isVertical)
 	var minMax = [response.min, response.max]
 	if (response.code !== 1000) {
 			return
@@ -30,6 +30,9 @@ export default function() {
 		// Set 2 random bars to min and max
 		myRandomSlots = twoRandomSlots(selectedLayers.layers.length, 'Random')
 	}
+
+	// Force other type than detected if user has selected force type
+ 	if(response.forcetype){isVertical = !isVertical}
 	 
 
 	/* 
@@ -201,7 +204,7 @@ function twoRandomSlots(length, type){
 }
 
 
-function myinput(myMinMax=[20,100], numOfBars=""){
+function myinput(myMinMax=[20,100], numOfBars="", my_isVertical){
 	var myresponse = {}
 
 	if(myMinMax.length != 2 || myMinMax[0]==myMinMax[1]){
@@ -238,7 +241,7 @@ function myinput(myMinMax=[20,100], numOfBars=""){
 	    view.addSubview(maxInput);
 
 		// Nature of data
-		var trendTypeInput =  NSView.alloc().initWithFrame(NSMakeRect(0, 0, width, 125))
+		var trendTypeInput =  NSView.alloc().initWithFrame(NSMakeRect(0, 0, width, 135))
 		// Acts like a template (prototype) for our radio buttons
 		var buttonFormat;
 		  buttonFormat = NSButtonCell.alloc().init();
@@ -246,7 +249,7 @@ function myinput(myMinMax=[20,100], numOfBars=""){
 
 		// The matrix will contain all the cells (radio buttons)
 		var matrixFormat = NSMatrix.alloc().initWithFrame_mode_prototype_numberOfRows_numberOfColumns(
-		            NSMakeRect(0, 0, 260, 125), // Horizontal position, vertical position, width, height
+		            NSMakeRect(0, 0, 260, 135), // Horizontal position, vertical position, width, height
 		            NSRadioModeMatrix, // This makes the radio buttons work together
 		            buttonFormat,
 		            5, // 1 row
@@ -266,6 +269,30 @@ function myinput(myMinMax=[20,100], numOfBars=""){
 
 		// Adding the matrix to the form
 		trendTypeInput.addSubview(matrixFormat);
+
+
+		// Bar type: Vertical or horizontal
+
+	 	var bartype_label = createLabel("Vertical or horizontal?", 12, true, NSMakeRect(0, 0, width, 16));
+
+		var bartype_radio =  NSView.alloc().initWithFrame(NSMakeRect(0, 0, width, 48))
+
+		var matrixFormat_bartype = NSMatrix.alloc().initWithFrame_mode_prototype_numberOfRows_numberOfColumns(
+		            NSMakeRect(0, 0, 260, 48),
+		            NSRadioModeMatrix,
+		            buttonFormat, 2, 1
+		        );
+
+		matrixFormat_bartype.setCellSize(CGSizeMake(260, 25));
+
+		var bartype_radio1_label = my_isVertical ? "Automatic (vertical detected)" : "Automatic (horizontal detected)"
+		var bartype_radio2_label = my_isVertical ? "Force horizontal" : "Force vertical"
+		var cells_bartype = matrixFormat_bartype.cells();
+		              cells_bartype.objectAtIndex(0).setTitle(bartype_radio1_label);
+		              cells_bartype.objectAtIndex(1).setTitle(bartype_radio2_label);
+
+		bartype_radio.addSubview(matrixFormat_bartype);
+
 
 		// Setup the window
 		var alert = COSAlertWindow.new()
@@ -290,6 +317,8 @@ function myinput(myMinMax=[20,100], numOfBars=""){
 	 	//alert.addTextLabelWithValue("Specify the desired trend");
 	 	alert.addAccessoryView(trendTypeInput)
 	 	
+	 	alert.addAccessoryView(bartype_label);
+	 	alert.addAccessoryView(bartype_radio)
 	 	
 		/*
 			Key navigation (popup)
@@ -322,6 +351,10 @@ function myinput(myMinMax=[20,100], numOfBars=""){
 	 		}else{
 	 			myresponse.max = parseInt(maxInput.stringValue())
 	 		}
+
+	 		// Force bar chart type
+	 		var forcetype_index = matrixFormat_bartype.cells().indexOfObject(matrixFormat_bartype.selectedCell());
+	 		myresponse.forcetype = forcetype_index == 0 ? false : true;
 	 	}else{
 	 		// Cancel
 	 		myresponse.code = 1001

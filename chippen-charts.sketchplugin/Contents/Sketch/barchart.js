@@ -120,7 +120,7 @@ __webpack_require__.r(__webpack_exports__);
   	User input
   */
 
-  var response = myinput(minMax_fromSelection, doc.selectedLayers.layers.length);
+  var response = myinput(minMax_fromSelection, doc.selectedLayers.layers.length, isVertical);
   var minMax = [response.min, response.max];
 
   if (response.code !== 1000) {
@@ -133,6 +133,11 @@ __webpack_require__.r(__webpack_exports__);
     // Only for random trend
     // Set 2 random bars to min and max
     myRandomSlots = twoRandomSlots(selectedLayers.layers.length, 'Random');
+  } // Force other type than detected if user has selected force type
+
+
+  if (response.forcetype) {
+    isVertical = !isVertical;
   }
   /* 
   	UI message
@@ -316,6 +321,7 @@ function twoRandomSlots(length, type) {
 function myinput() {
   var myMinMax = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : [20, 100];
   var numOfBars = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : "";
+  var my_isVertical = arguments.length > 2 ? arguments[2] : undefined;
   var myresponse = {};
 
   if (myMinMax.length != 2 || myMinMax[0] == myMinMax[1]) {
@@ -348,13 +354,13 @@ function myinput() {
     maxInput.cell().setPlaceholderString(myMinMax[1] + " (max)");
     view.addSubview(maxInput); // Nature of data
 
-    var trendTypeInput = NSView.alloc().initWithFrame(NSMakeRect(0, 0, width, 125)); // Acts like a template (prototype) for our radio buttons
+    var trendTypeInput = NSView.alloc().initWithFrame(NSMakeRect(0, 0, width, 135)); // Acts like a template (prototype) for our radio buttons
 
     var buttonFormat;
     buttonFormat = NSButtonCell.alloc().init();
     buttonFormat.setButtonType(NSRadioButton); // The matrix will contain all the cells (radio buttons)
 
-    var matrixFormat = NSMatrix.alloc().initWithFrame_mode_prototype_numberOfRows_numberOfColumns(NSMakeRect(0, 0, 260, 125), // Horizontal position, vertical position, width, height
+    var matrixFormat = NSMatrix.alloc().initWithFrame_mode_prototype_numberOfRows_numberOfColumns(NSMakeRect(0, 0, 260, 135), // Horizontal position, vertical position, width, height
     NSRadioModeMatrix, // This makes the radio buttons work together
     buttonFormat, 5, // 1 row
     1 // 3 columns (for 3 radio buttons)
@@ -369,7 +375,18 @@ function myinput() {
     cells.objectAtIndex(3).setTitle("Trend going down ↓ (linear)");
     cells.objectAtIndex(4).setTitle("Trend going down ↓ (natural)"); // Adding the matrix to the form
 
-    trendTypeInput.addSubview(matrixFormat); // Setup the window
+    trendTypeInput.addSubview(matrixFormat); // Bar type: Vertical or horizontal
+
+    var bartype_label = Object(_utils_js__WEBPACK_IMPORTED_MODULE_1__["createLabel"])("Vertical or horizontal?", 12, true, NSMakeRect(0, 0, width, 16));
+    var bartype_radio = NSView.alloc().initWithFrame(NSMakeRect(0, 0, width, 48));
+    var matrixFormat_bartype = NSMatrix.alloc().initWithFrame_mode_prototype_numberOfRows_numberOfColumns(NSMakeRect(0, 0, 260, 48), NSRadioModeMatrix, buttonFormat, 2, 1);
+    matrixFormat_bartype.setCellSize(CGSizeMake(260, 25));
+    var bartype_radio1_label = my_isVertical ? "Automatic (vertical detected)" : "Automatic (horizontal detected)";
+    var bartype_radio2_label = my_isVertical ? "Force horizontal" : "Force vertical";
+    var cells_bartype = matrixFormat_bartype.cells();
+    cells_bartype.objectAtIndex(0).setTitle(bartype_radio1_label);
+    cells_bartype.objectAtIndex(1).setTitle(bartype_radio2_label);
+    bartype_radio.addSubview(matrixFormat_bartype); // Setup the window
 
     var alert = COSAlertWindow.new();
 
@@ -390,6 +407,8 @@ function myinput() {
     alert.addAccessoryView(trend_label); //alert.addTextLabelWithValue("Specify the desired trend");
 
     alert.addAccessoryView(trendTypeInput);
+    alert.addAccessoryView(bartype_label);
+    alert.addAccessoryView(bartype_radio);
     /*
     	Key navigation (popup)
     	*/
@@ -419,7 +438,11 @@ function myinput() {
         myresponse.max = myMinMax[1];
       } else {
         myresponse.max = parseInt(maxInput.stringValue());
-      }
+      } // Force bar chart type
+
+
+      var forcetype_index = matrixFormat_bartype.cells().indexOfObject(matrixFormat_bartype.selectedCell());
+      myresponse.forcetype = forcetype_index == 0 ? false : true;
     } else {
       // Cancel
       myresponse.code = 1001;
