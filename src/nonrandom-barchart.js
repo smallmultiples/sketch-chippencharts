@@ -21,7 +21,7 @@ export default function() {
 		User input
 	*/
 
-	var response = myinput(minMax_fromSelection, doc.selectedLayers.layers.length, barHeight_fromSelection)
+	var response = myinput(minMax_fromSelection, doc.selectedLayers.layers.length, barHeight_fromSelection, isVertical)
 
 	var scaleType_names = ["", "Multiplied by", "Set to max pixel height"]
 
@@ -31,6 +31,8 @@ export default function() {
 		}
 	var myRandomSlots = []
  
+	// Force other type than detected if user has selected force type
+ 	if(response.forcetype){isVertical = !isVertical}
 
 	/* 
 		UI message
@@ -182,10 +184,11 @@ function getMinMax(arr, isVertical){
 	return [Math.ceil(min), Math.ceil(max)]
 }
 
-function myinput(myMinMax=[20,100], numOfBars="", myBarHeightFromSelection){
+function myinput(myMinMax=[20,100], numOfBars="", myBarHeightFromSelection, my_isVertical){
 	var myresponse = {
 		code: null,
 		max: null,
+		forcetype : false,
 		numbers: [],
 		trendTypeInput: null
 	}
@@ -222,13 +225,13 @@ function myinput(myMinMax=[20,100], numOfBars="", myBarHeightFromSelection){
 
 		var alert = COSAlertWindow.new()
 		if(numOfBars==1){
-			alert.setMessageText("Create your defined bar chart \nwith 1 selected layer")
+			alert.setMessageText("1 layer selected to create bar chart")
 		}else{
-			alert.setMessageText(`Create your defined bar chart \nwith ${numOfBars} selected layers`)
+			alert.setMessageText(`${numOfBars} layers selected to create bar chart`)
 		}
 		alert.addButtonWithTitle("Run")
 		alert.addButtonWithTitle("Cancel")
-		alert.setInformativeText(`This is for a bar chart where you have specific values in mind, rather than using random numbers.`)
+		alert.setInformativeText(`This is for a bar chart with specific values, rather than random numbers.`)
 
 		/*
 			Input
@@ -248,12 +251,42 @@ function myinput(myMinMax=[20,100], numOfBars="", myBarHeightFromSelection){
 	 		numInput_separatorOptions[1],
 	 		numInput_separatorOptions[2],
 	 		numInput_separatorOptions[3]
-	 		], NSMakeRect(-2, -1, 150, 24));
+	 		], NSMakeRect(-2, -1, 170, 30));
 	 	alert.addAccessoryView(numInput_label);
 	 	alert.addAccessoryView(numInput);
 	 	alert.addAccessoryView(numInput_separator);
 
-	 	
+
+	 	/*
+			Bar type: Vertical or horizontal
+	 	*/
+
+	 	var bartype_label = createLabel("Vertical or horizontal?", 12, true, NSMakeRect(0, 0, alert_width, 16));
+	 	alert.addAccessoryView(bartype_label);
+
+
+		var bartype_radio =  NSView.alloc().initWithFrame(NSMakeRect(0, 0, width, 48))
+		var buttonFormat;
+		  buttonFormat = NSButtonCell.alloc().init();
+		  buttonFormat.setButtonType(NSRadioButton);
+
+		var matrixFormat = NSMatrix.alloc().initWithFrame_mode_prototype_numberOfRows_numberOfColumns(
+		            NSMakeRect(0, 0, 260, 48),
+		            NSRadioModeMatrix,
+		            buttonFormat, 2, 1
+		        );
+
+		matrixFormat.setCellSize(CGSizeMake(260, 25));
+
+		var bartype_radio1_label = my_isVertical ? "Automatic (vertical detected)" : "Automatic (horizontal detected)"
+		var bartype_radio2_label = my_isVertical ? "Force horizontal" : "Force vertical"
+		var cells = matrixFormat.cells();
+		              cells.objectAtIndex(0).setTitle(bartype_radio1_label);
+		              cells.objectAtIndex(1).setTitle(bartype_radio2_label);
+
+		bartype_radio.addSubview(matrixFormat);
+		alert.addAccessoryView(bartype_radio)
+
 
 	 	/*
 			Options
@@ -261,20 +294,20 @@ function myinput(myMinMax=[20,100], numOfBars="", myBarHeightFromSelection){
 	 	var optionsView_height = 85;
 
 	 	var optionsView = NSView.alloc().initWithFrame(NSMakeRect(0, 0, alert_width, optionsView_height));
-	 	var optionsLabel = createLabel("Do you want to scale these values?", 12, true, NSMakeRect(0, optionsView_height - 26, alert_width, 16));
-	 	var optionsLabel_inlineNote = createLabel("(optional)", 12, false, NSMakeRect(215, optionsView_height - 26, alert_width, 16), 0.3);
+	 	var optionsLabel = createLabel("Do you want to scale the values?", 12, true, NSMakeRect(0, optionsView_height - 26, alert_width, 16));
+	 	//var optionsLabel_inlineNote = createLabel("(optional)", 12, false, NSMakeRect(215, optionsView_height - 26, alert_width, 16), 0.3);
 
-	 	var option1_label = createLabel("Multiplier", 12, false, NSMakeRect(0, optionsView_height-48, 130, 16));
-	 	var option1_textField = createTextField("", "e.g. 1", NSMakeRect(0, optionsView_height-81, 130, 25));
+	 	var option1_label = createLabel("Multiply by", 12, false, NSMakeRect(0, optionsView_height-48, 130, 16));
+	 	var option1_textField = createTextField("", "e.g. 1.5", NSMakeRect(0, optionsView_height-81, 120, 25));
 
-	 	var option2_label = createLabel("Max bar height (px)", 12, false, NSMakeRect(150, optionsView_height-48, 130, 16));
-	 	var option2_textField = createTextField("", "e.g. " + 100, NSMakeRect(150, optionsView_height-81, 130, 25)); // prev version showed myMinMax[1] as option
+	 	var option2_label = createLabel("or set max height (px)", 12, false, NSMakeRect(140, optionsView_height-48, 130, 16));
+	 	var option2_textField = createTextField("", "e.g. " + 100, NSMakeRect(140, optionsView_height-81, 120, 25)); // prev version showed myMinMax[1] as option
 		
-		var options_info = createLabel("You have the option to define the scaling in case the supplied values don't match your desired pixel values. You can either define a multiplier or set a maximum bar height in pixel.", 11, false, NSMakeRect(0, 0, 260, 16*4))
+		//var options_info = createLabel("You have the option to define the scaling in case the supplied values don't match your desired pixel values. You can either define a multiplier or set a maximum bar height in pixel.", 11, false, NSMakeRect(0, 0, 260, 16*4))
+		var options_info = createLabel("Scale data values in case the supplied numbers don't match the desired pixel values.", 11, false, NSMakeRect(0, 0, 260, 16*2))
 
 	 	optionsView.addSubview(optionsLabel);
-	 	optionsView.addSubview(optionsLabel_inlineNote);
-	 	optionsView.addSubview(options_info)
+	 	//optionsView.addSubview(optionsLabel_inlineNote);
 	 	
 	 	optionsView.addSubview(option1_label);
 	 	optionsView.addSubview(option1_textField);
@@ -283,7 +316,7 @@ function myinput(myMinMax=[20,100], numOfBars="", myBarHeightFromSelection){
 	 	optionsView.addSubview(option2_textField);
 
 	 	alert.addAccessoryView(optionsView); 
-	 	alert.addAccessoryView(options_info)
+	 	// alert.addAccessoryView(options_info)
 
 
 	 	/*
@@ -338,6 +371,10 @@ function myinput(myMinMax=[20,100], numOfBars="", myBarHeightFromSelection){
 	 				parseFloat(numbers_arr[i])
 	 				);
 	 		}
+
+	 		// Force bar chart type
+	 		var forcetype_index = matrixFormat.cells().indexOfObject(matrixFormat.selectedCell());
+	 		myresponse.forcetype = forcetype_index == 0 ? false : true;
 
 	 		// Options
 	 		if(option2_textField.stringValue() != ""){
