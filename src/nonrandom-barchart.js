@@ -264,7 +264,6 @@ function myinput(myMinMax=[20,100], numOfBars="", myBarHeightFromSelection, my_i
 	 	var bartype_label = createLabel("Vertical or horizontal?", 12, true, NSMakeRect(0, 0, alert_width, 16));
 	 	alert.addAccessoryView(bartype_label);
 
-
 		var bartype_radio =  NSView.alloc().initWithFrame(NSMakeRect(0, 0, width, 48))
 		var buttonFormat;
 		  buttonFormat = NSButtonCell.alloc().init();
@@ -297,23 +296,23 @@ function myinput(myMinMax=[20,100], numOfBars="", myBarHeightFromSelection, my_i
 	 	var optionsLabel = createLabel("Do you want to scale the values?", 12, true, NSMakeRect(0, optionsView_height - 26, alert_width, 16));
 	 	//var optionsLabel_inlineNote = createLabel("(optional)", 12, false, NSMakeRect(215, optionsView_height - 26, alert_width, 16), 0.3);
 
-	 	var option1_label = createLabel("Multiply by", 12, false, NSMakeRect(0, optionsView_height-48, 130, 16));
-	 	var option1_textField = createTextField("", "e.g. 1.5", NSMakeRect(0, optionsView_height-81, 120, 25));
-
-	 	var option2_label = createLabel("or set max height (px)", 12, false, NSMakeRect(140, optionsView_height-48, 130, 16));
-	 	var option2_textField = createTextField("", "e.g. " + 100, NSMakeRect(140, optionsView_height-81, 120, 25)); // prev version showed myMinMax[1] as option
-		
+	 	var option1_textField = createTextField("", "e.g. 1.5", NSMakeRect(0, optionsView_height-60, 120, 25));
+	 	var option1_label = createLabel("Multiply by", 12, false, NSMakeRect(0, optionsView_height-79, 130, 16));
+	 	
+	 	var option2_textField = createTextField("", "e.g. " + 100, NSMakeRect(140, optionsView_height-60, 120, 25)); // prev version showed myMinMax[1] as option
+	 	var option2_label = createLabel("or set max height (px)", 12, false, NSMakeRect(140, optionsView_height-79, 130, 16));
+	 			
 		//var options_info = createLabel("You have the option to define the scaling in case the supplied values don't match your desired pixel values. You can either define a multiplier or set a maximum bar height in pixel.", 11, false, NSMakeRect(0, 0, 260, 16*4))
 		var options_info = createLabel("Scale data values in case the supplied numbers don't match the desired pixel values.", 11, false, NSMakeRect(0, 0, 260, 16*2))
 
 	 	optionsView.addSubview(optionsLabel);
 	 	//optionsView.addSubview(optionsLabel_inlineNote);
 	 	
-	 	optionsView.addSubview(option1_label);
 	 	optionsView.addSubview(option1_textField);
+	 	optionsView.addSubview(option1_label);
 	 	
-	 	optionsView.addSubview(option2_label);
 	 	optionsView.addSubview(option2_textField);
+	 	optionsView.addSubview(option2_label);
 
 	 	alert.addAccessoryView(optionsView); 
 	 	// alert.addAccessoryView(options_info)

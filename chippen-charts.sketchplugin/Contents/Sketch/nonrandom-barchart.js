@@ -383,19 +383,19 @@ function myinput() {
     var optionsView = NSView.alloc().initWithFrame(NSMakeRect(0, 0, alert_width, optionsView_height));
     var optionsLabel = Object(_utils_js__WEBPACK_IMPORTED_MODULE_1__["createLabel"])("Do you want to scale the values?", 12, true, NSMakeRect(0, optionsView_height - 26, alert_width, 16)); //var optionsLabel_inlineNote = createLabel("(optional)", 12, false, NSMakeRect(215, optionsView_height - 26, alert_width, 16), 0.3);
 
-    var option1_label = Object(_utils_js__WEBPACK_IMPORTED_MODULE_1__["createLabel"])("Multiply by", 12, false, NSMakeRect(0, optionsView_height - 48, 130, 16));
-    var option1_textField = Object(_utils_js__WEBPACK_IMPORTED_MODULE_1__["createTextField"])("", "e.g. 1.5", NSMakeRect(0, optionsView_height - 81, 120, 25));
-    var option2_label = Object(_utils_js__WEBPACK_IMPORTED_MODULE_1__["createLabel"])("or set max height (px)", 12, false, NSMakeRect(140, optionsView_height - 48, 130, 16));
-    var option2_textField = Object(_utils_js__WEBPACK_IMPORTED_MODULE_1__["createTextField"])("", "e.g. " + 100, NSMakeRect(140, optionsView_height - 81, 120, 25)); // prev version showed myMinMax[1] as option
-    //var options_info = createLabel("You have the option to define the scaling in case the supplied values don't match your desired pixel values. You can either define a multiplier or set a maximum bar height in pixel.", 11, false, NSMakeRect(0, 0, 260, 16*4))
+    var option1_textField = Object(_utils_js__WEBPACK_IMPORTED_MODULE_1__["createTextField"])("", "e.g. 1.5", NSMakeRect(0, optionsView_height - 60, 120, 25));
+    var option1_label = Object(_utils_js__WEBPACK_IMPORTED_MODULE_1__["createLabel"])("Multiply by", 12, false, NSMakeRect(0, optionsView_height - 78, 130, 16));
+    var option2_textField = Object(_utils_js__WEBPACK_IMPORTED_MODULE_1__["createTextField"])("", "e.g. " + 100, NSMakeRect(140, optionsView_height - 60, 120, 25)); // prev version showed myMinMax[1] as option
+
+    var option2_label = Object(_utils_js__WEBPACK_IMPORTED_MODULE_1__["createLabel"])("or set max height (px)", 12, false, NSMakeRect(140, optionsView_height - 78, 130, 16)); //var options_info = createLabel("You have the option to define the scaling in case the supplied values don't match your desired pixel values. You can either define a multiplier or set a maximum bar height in pixel.", 11, false, NSMakeRect(0, 0, 260, 16*4))
 
     var options_info = Object(_utils_js__WEBPACK_IMPORTED_MODULE_1__["createLabel"])("Scale data values in case the supplied numbers don't match the desired pixel values.", 11, false, NSMakeRect(0, 0, 260, 16 * 2));
     optionsView.addSubview(optionsLabel); //optionsView.addSubview(optionsLabel_inlineNote);
 
-    optionsView.addSubview(option1_label);
     optionsView.addSubview(option1_textField);
-    optionsView.addSubview(option2_label);
+    optionsView.addSubview(option1_label);
     optionsView.addSubview(option2_textField);
+    optionsView.addSubview(option2_label);
     alert.addAccessoryView(optionsView); // alert.addAccessoryView(options_info)
 
     /*
