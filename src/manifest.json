@@ -20,7 +20,7 @@
       "script": "./nonrandom-barchart.js"
     },
     {
-      "name": "💥 Paste clipboard text into symbols",
+      "name": "Paste clipboard text into symbols",
       "identifier": "cliptexttosymbol",
       "script": "./cliptexttosymbol.js"
     },
