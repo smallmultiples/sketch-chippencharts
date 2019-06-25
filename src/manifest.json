@@ -23,6 +23,11 @@
       "name": "💥 Paste clipboard text into symbols",
       "identifier": "cliptexttosymbol",
       "script": "./cliptexttosymbol.js"
+    },
+    {
+      "name": "Random fill",
+      "identifier": "randomfill",
+      "script": "./randomfill.js"      
     }
   ],
   "menu": {
@@ -30,6 +35,8 @@
     "items": [
       "barchart",
       "nonrandombarchart",
+      "-",
+      "randomfill",
       "-",
       "cliptexttosymbol"
     ]
