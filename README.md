@@ -13,6 +13,12 @@ Furthermore, the latest feature allows you to paste text from the clipboard stra
 
 Made with love by [Small Multiples](https://smallmultiples.com.au/) in Chippendale, Sydney.
 
+**List of current features**
+- Bar chart with random values
+- Bar chart with actual data
+- Apply random fill to selection **(new)**
+- Paste clipboard text into symbols
+
 ## How to install
 
 1. Click the `Clone or download` button in the top right and choose `Download Zip`
@@ -94,6 +100,12 @@ Besindes random numbers you can choose between linear trends and natural trends.
 <img width="855" height="566" src="https://raw.githubusercontent.com/smallmultiples/sketch-chippencharts/master/images/6_showcase.png" title="Showcase">
 
 ## Version history
+
+##### 3.6
+
+- New feature: Random fill
+- Bar charts: Force vertical or horizontal bar chart type
+- Updates to popup
 
 ##### 3.5.4
 
