@@ -101,6 +101,10 @@ Besindes random numbers you can choose between linear trends and natural trends.
 
 ## Version history
 
+##### 3.6.1
+
+- Random fill: add option to use layer order
+
 ##### 3.6
 
 - New feature: Random fill
