@@ -16,8 +16,9 @@ Made with love by [Small Multiples](https://smallmultiples.com.au/) in Chippenda
 **List of current features**
 - Bar chart with random values
 - Bar chart with actual data
-- Apply random fill to selection **(new)**
 - Paste clipboard text into symbols
+- Apply random fill to selection **(new)**
+
 
 ## How to install
 
@@ -52,6 +53,12 @@ Get your clipboard loaded with amazing text content, fire up the plugin, and let
 You might wonder why you wouldn't wanna use the Sketch Data feature for that. The thing is, the Sketch Data feature does not preserve the order of elements, which this plugin does.
 
 <img width="888" src="https://raw.githubusercontent.com/smallmultiples/sketch-chippencharts/master/images/showcase-paste-clipboard-into-symbols.gif" title="Chippencharts sketch plugin: Paste clipboard text into symbol overrides">
+
+### 4. Random fill
+
+Apply random colours to selected layers or choose to apply colours based on the order layers in order to create a gradient. All that needs to be done is choosing two hex colours and the number of colours you want to be generated.
+
+<img width="888" src="https://raw.githubusercontent.com/smallmultiples/sketch-chippencharts/master/images/showcase_random-fill_chippencharts_sketch-plugin.gif" title="Chippencharts sketch plugin: Aplly random or gradient fill to layers">
 
 ---
 
