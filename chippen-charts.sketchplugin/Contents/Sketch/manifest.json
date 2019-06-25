@@ -20,7 +20,7 @@
       "script": "nonrandom-barchart.js"
     },
     {
-      "name": "💥 Paste clipboard text into symbols",
+      "name": "Paste clipboard text into symbols",
       "identifier": "cliptexttosymbol",
       "script": "cliptexttosymbol.js"
     },
@@ -41,7 +41,7 @@
       "cliptexttosymbol"
     ]
   },
-  "version": "3.5.4",
+  "version": "3.6.0",
   "identifier": "Chippen charts",
   "disableCocoaScriptPreprocessor": true,
   "appcast": "https://raw.githubusercontent.com/smallmultiples/sketch-chippencharts/master/.appcast.xml"

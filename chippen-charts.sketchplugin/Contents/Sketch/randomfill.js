@@ -145,12 +145,14 @@ __webpack_require__.r(__webpack_exports__);
   var col2Input = Object(_utils_js__WEBPACK_IMPORTED_MODULE_1__["createTextField"])(defaultCol2, null, NSMakeRect(150, 0, 130, 25));
   var categories_label = Object(_utils_js__WEBPACK_IMPORTED_MODULE_1__["createLabel"])("How many random colours do you want?", 12, true, NSMakeRect(0, 0, popup_width, 16));
   var categoriesInput = Object(_utils_js__WEBPACK_IMPORTED_MODULE_1__["createTextField"])(defaultCategories, null, NSMakeRect(0, 0, 130, 25));
+  var sort_checkbox = Object(_utils_js__WEBPACK_IMPORTED_MODULE_1__["createCheckbox"])("Use layer order instead of random order", false, NSMakeRect(-2, -1, 280, 24));
   popup.addAccessoryView(colInput_label);
   col_view.addSubview(col1Input);
   col_view.addSubview(col2Input);
   popup.addAccessoryView(col_view);
   popup.addAccessoryView(categories_label);
   popup.addAccessoryView(categoriesInput);
+  popup.addAccessoryView(sort_checkbox);
   popup.alert().window().setInitialFirstResponder(col1Input);
   col1Input.setNextKeyView(col2Input);
   col2Input.setNextKeyView(categoriesInput);
@@ -169,13 +171,14 @@ __webpack_require__.r(__webpack_exports__);
   var col1 = removeHash(col1Input.stringValue());
   var col2 = removeHash(col2Input.stringValue());
   var num_of_colours = parseFloat(categoriesInput.stringValue());
+  var apply_by_layer_order = Number(sort_checkbox.state()) == 1 ? true : false;
   /*
   	CALCULATE COLOURS AND APPLY
   */
 
   var col1_rgb = hexToRGB(col1);
   var col2_rgb = hexToRGB(col2);
-  var colours = [col1, col2];
+  var colours = [col1]; // start colour
 
   for (var i = 0; i < num_of_colours - 2; i++) {
     var new_rgb = [];
@@ -189,12 +192,16 @@ __webpack_require__.r(__webpack_exports__);
     }
 
     colours.push(rgbToHex(new_rgb));
-  } // Apply new colours to selection
+  }
 
+  colours.push(col2); // last colour
+  // Apply new colours to selection
 
   for (var i = 0; i < selectedLayers.layers.length; i++) {
     var random_index = Math.floor(Math.random() * (+colours.length - +0)) + +0;
-    var random_col = hex_9(colours[random_index]);
+    var order_index = Math.floor(i * ((colours.length - 1) / (selectedLayers.layers.length - 1)));
+    var col_index = apply_by_layer_order ? order_index : random_index;
+    var random_col = hex_9(colours[col_index]);
 
     if (el_has_fillcolor.includes(selectedLayers.layers[i].type)) {
       // Change fill if it's shape layer
