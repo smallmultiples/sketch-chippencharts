@@ -110,7 +110,7 @@ __webpack_require__.r(__webpack_exports__);
   var doc = sketch__WEBPACK_IMPORTED_MODULE_0___default.a.getSelectedDocument();
   var selectedLayers = doc.selectedLayers; // Elements with these types will get fill colour applied
 
-  var el_has_fillcolor = ["Rectangle", "ShapePath"];
+  var el_has_fillcolor = ["Rectangle", "ShapePath", "Shape"];
   var el_has_textcolor = ["Text"]; // Default values for popup
 
   var defaultCol1 = "#eeeeee";

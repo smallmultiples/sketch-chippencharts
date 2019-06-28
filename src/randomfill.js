@@ -7,7 +7,7 @@ export default function() {
 	const selectedLayers = doc.selectedLayers;
 
 	// Elements with these types will get fill colour applied
-	const el_has_fillcolor = ["Rectangle", "ShapePath"]
+	const el_has_fillcolor = ["Rectangle", "ShapePath", "Shape"]
 	const el_has_textcolor = ["Text"]
 
 	// Default values for popup
